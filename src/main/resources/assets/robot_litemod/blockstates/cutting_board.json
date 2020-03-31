@@ -1,0 +1,23 @@
+{
+  "variants": {
+    "facing=north,damage_level=brand_new": { "model": "robot_litemod:block/cutting_block/brand_new" },
+    "facing=north,damage_level=slightly_used": { "model": "robot_litemod:block/cutting_block/slightly_used" },
+    "facing=north,damage_level=used": { "model": "robot_litemod:block/cutting_block/used" },
+    "facing=north,damage_level=heavily_used": { "model": "robot_litemod:block/cutting_block/heavily_used" },
+
+    "facing=east,damage_level=brand_new": { "model": "robot_litemod:block/cutting_block/brand_new", "y": 90 },
+    "facing=east,damage_level=slightly_used": { "model": "robot_litemod:block/cutting_block/slightly_used", "y": 90 },
+    "facing=east,damage_level=used": { "model": "robot_litemod:block/cutting_block/used", "y": 90 },
+    "facing=east,damage_level=heavily_used": { "model": "robot_litemod:block/cutting_block/heavily_used", "y": 90 },
+
+    "facing=south,damage_level=brand_new": { "model": "robot_litemod:block/cutting_block/brand_new", "y": 180 },
+    "facing=south,damage_level=slightly_used": { "model": "robot_litemod:block/cutting_block/slightly_used", "y": 180 },
+    "facing=south,damage_level=used": { "model": "robot_litemod:block/cutting_block/used", "y": 180 },
+    "facing=south,damage_level=heavily_used": { "model": "robot_litemod:block/cutting_block/heavily_used", "y": 180 },
+
+    "facing=west,damage_level=brand_new": { "model": "robot_litemod:block/cutting_block/brand_new", "y": 270 },
+    "facing=west,damage_level=slightly_used": { "model": "robot_litemod:block/cutting_block/slightly_used", "y": 270 },
+    "facing=west,damage_level=used": { "model": "robot_litemod:block/cutting_block/used", "y": 270 },
+    "facing=west,damage_level=heavily_used": { "model": "robot_litemod:block/cutting_block/heavily_used", "y": 270 }
+  }
+}

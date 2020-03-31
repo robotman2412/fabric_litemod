@@ -1,0 +1,25 @@
+To make:
+beigets
+burger_bun
+chocolate_and_strawberry_ice_cream
+chocolate_ice_cream
+cupcake
+cupcake_with_chocolate_frosting
+cupcake_with_chocolate_frosting_and_sprinkles
+cupcake_with_pink_frosting
+cupcake_with_pink_frosting_and_sprinkles
+cupcake_with_whipped_cream_topping
+cupcake_with_whipped_cream_topping_and_sprinkles
+double_chocolate_ice_cream
+double_strawberry_ice_cream
+hamburger
+ice_cream_cone
+lettuce
+peperony_pizza
+rainbow_cookie
+strawberry_and_chocolate_ice_cream
+strawberry_ice_cream
+
+Ideas:
+for toasted breads, use furnace
+

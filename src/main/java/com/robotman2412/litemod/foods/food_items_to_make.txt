@@ -1,0 +1,11 @@
+Food:
+tomato
+sliced_tomato
+strawberry
+
+Kitchen supplies:
+blender
+ice_cream_scoop
+bowl_mixer
+dough_mixing_head
+mixing_head

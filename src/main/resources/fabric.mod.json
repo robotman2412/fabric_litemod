@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "robot_litemod",
+  "version": "${version}",
+
+  "name": "RobotMan2412's Fabric litemod!",
+  "description": "Light weight mod to add autocrafting and other useful features in a vanilla like way.",
+  "authors": [
+    "RobotMan2412"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/RobotMan2412/fabric-litemod"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/robot_litemod/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.robotman2412.litemod.FabricLitemod"
+    ],
+    "client": [
+      "com.robotman2412.litemod.FabricLitemod"
+    ]
+  },
+  "mixins": [
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.15.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}

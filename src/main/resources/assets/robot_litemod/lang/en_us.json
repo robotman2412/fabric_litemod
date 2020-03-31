@@ -1,0 +1,40 @@
+{
+
+  "item.robot_litemod.essence_of_bullshite": "Essence of bullshite",
+  "item.robot_litemod.frequency_tuner": "Frequency tuner",
+  "item.robot_litemod.kitchen_knife": "Kitchen knife",
+  "item.robot_litemod.remote_redstone_inferrer": "Handheld redstone inferrer",
+
+  "item.robot_litemod.beigets": "Beigets",
+  "item.robot_litemod.burger_bun": "Burger bun",
+  "item.robot_litemod.chocolate_and_strawberry_ice_cream": "Chocolate and strawberry ice cream",
+  "item.robot_litemod.chocolate_ice_cream": "Chocolate ice cream",
+  "item.robot_litemod.cupcake": "Plain cupcake",
+  "item.robot_litemod.cupcake_with_chocolate_frosting": "Cupcake with chocolate frosting",
+  "item.robot_litemod.cupcake_with_chocolate_frosting_and_sprinkles": "Cupcake with chocolate frosting and sprinkles",
+  "item.robot_litemod.cupcake_with_pink_frosting": "Cupcake with pink frosting",
+  "item.robot_litemod.cupcake_with_pink_frosting_and_sprinkles": "Cupcake with pink frosting and sprinkles",
+  "item.robot_litemod.cupcake_with_whipped_cream_topping": "Cupcake with whipped cream topping",
+  "item.robot_litemod.cupcake_with_whipped_cream_topping_and_sprinkles": "Cupcake with whipped cream topping and sprinkles",
+  "item.robot_litemod.double_chocolate_ice_cream": "Double chocolate ice cream",
+  "item.robot_litemod.double_strawberry_ice_cream": "Double strawberry ice cream",
+  "item.robot_litemod.hamburger": "Hamburger",
+  "item.robot_litemod.ice_cream_cone": "Ice cream cone",
+  "item.robot_litemod.lettuce": "Bunch of lettuce",
+  "item.robot_litemod.peperoni_pizza": "Peperoni pizza",
+  "item.robot_litemod.pizza_slice": "Peperoni pizza slice",
+  "item.robot_litemod.rainbow_cookie": "Rainbow cookie",
+  "item.robot_litemod.strawberry_and_chocolate_ice_cream": "Strawberry and chocolate ice cream",
+  "item.robot_litemod.strawberry_ice_cream": "Strawberry ice cream",
+
+  "itemGroup.robot_litemod.kitchen_supplies": "Kitchen supplies",
+
+  "block.robot_litemod.redstone_capacitor": "Redstone capacitor",
+  "block.robot_litemod.redstone_inferrer": "Redstone inferrer",
+  "block.robot_litemod.cutting_board": "Cutting board",
+
+  "robot_litemod.gui.frequency_tuner.private": "Private",
+  "robot_litemod.gui.frequency_tuner.public": "Public",
+  "robot_litemod.gui.frequency_tuner.channel_selected": "Channel"
+
+}

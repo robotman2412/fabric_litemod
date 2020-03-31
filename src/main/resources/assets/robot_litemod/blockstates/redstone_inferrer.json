@@ -1,0 +1,23 @@
+{
+    "variants": {
+      "facing=north,powered=false,sending=false": { "model": "robot_litemod:block/redstone_inferrer/receiver" },
+      "facing=north,powered=false,sending=true": { "model": "robot_litemod:block/redstone_inferrer/sender" },
+      "facing=north,powered=true,sending=false": { "model": "robot_litemod:block/redstone_inferrer/receiver_on" },
+      "facing=north,powered=true,sending=true": { "model": "robot_litemod:block/redstone_inferrer/sender_on" },
+
+      "facing=east,powered=false,sending=false": { "model": "robot_litemod:block/redstone_inferrer/receiver", "y": 90 },
+      "facing=east,powered=false,sending=true": { "model": "robot_litemod:block/redstone_inferrer/sender", "y": 90 },
+      "facing=east,powered=true,sending=false": { "model": "robot_litemod:block/redstone_inferrer/receiver_on", "y": 90 },
+      "facing=east,powered=true,sending=true": { "model": "robot_litemod:block/redstone_inferrer/sender_on", "y": 90 },
+
+      "facing=south,powered=false,sending=false": { "model": "robot_litemod:block/redstone_inferrer/receiver", "y": 180 },
+      "facing=south,powered=false,sending=true": { "model": "robot_litemod:block/redstone_inferrer/sender", "y": 180 },
+      "facing=south,powered=true,sending=false": { "model": "robot_litemod:block/redstone_inferrer/receiver_on", "y": 180 },
+      "facing=south,powered=true,sending=true": { "model": "robot_litemod:block/redstone_inferrer/sender_on", "y": 180 },
+
+      "facing=west,powered=false,sending=false": { "model": "robot_litemod:block/redstone_inferrer/receiver", "y": 270 },
+      "facing=west,powered=false,sending=true": { "model": "robot_litemod:block/redstone_inferrer/sender", "y": 270 },
+      "facing=west,powered=true,sending=false": { "model": "robot_litemod:block/redstone_inferrer/receiver_on", "y": 270 },
+      "facing=west,powered=true,sending=true": { "model": "robot_litemod:block/redstone_inferrer/sender_on", "y": 270 }
+    }
+}
