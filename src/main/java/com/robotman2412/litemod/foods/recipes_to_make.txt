@@ -22,4 +22,6 @@ strawberry_ice_cream
 
 Ideas:
 for toasted breads, use furnace
-
+for food coloring, use dyes
+for hamburger meat, use steak
+ice cream will be made with actual ice in the blender
