@@ -1,11 +1,23 @@
-Food:
+Food to make:
 tomato
 sliced_tomato
 strawberry
+strawberry_bush (block)
+corn_plant (block)
 
-Kitchen supplies:
-blender
+Stuff already drawn but not added:
+snelpoeder
+taccco
+bagel
+corn
+corn_seed
+popcorn
+sugarspinn
+toohot_dogg
+
+Kitchen supplies to make:
+blender (block)
 ice_cream_scoop
-bowl_mixer
+bowl_mixer (block)
 dough_mixing_head
 mixing_head
