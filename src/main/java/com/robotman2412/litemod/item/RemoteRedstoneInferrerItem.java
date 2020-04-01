@@ -87,8 +87,8 @@ public class RemoteRedstoneInferrerItem extends ItemWrapper implements Transmiss
 		if (!tag.contains("remote_id_least") || !tag.contains("remote_id_most")) {
 			SecureRandom rand = new SecureRandom();
 			senderID = new UUID(rand.nextLong(), rand.nextLong());
-			tag.putLong("sender_id_most", senderID.getMostSignificantBits());
-			tag.putLong("sender_id_least", senderID.getLeastSignificantBits());
+			tag.putLong("remote_id_most", senderID.getMostSignificantBits());
+			tag.putLong("remote_id_least", senderID.getLeastSignificantBits());
 		}
 		else
 		{

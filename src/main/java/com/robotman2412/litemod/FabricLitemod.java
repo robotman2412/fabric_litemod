@@ -1,9 +1,6 @@
 package com.robotman2412.litemod;
 
-import com.robotman2412.litemod.block.BlockWrapper;
-import com.robotman2412.litemod.block.CuttingBoardBlock;
-import com.robotman2412.litemod.block.RedstoneCapacitorBlock;
-import com.robotman2412.litemod.block.RedstoneCapacitorBlockEntity;
+import com.robotman2412.litemod.block.*;
 import com.robotman2412.litemod.block.inferrer.InferrerChannelMap;
 import com.robotman2412.litemod.block.inferrer.RedstoneInferrerBlock;
 import com.robotman2412.litemod.block.inferrer.RedstoneInferrerBlockEntity;
@@ -48,6 +45,7 @@ public class FabricLitemod implements ModInitializer, ClientModInitializer {
 	public static final RedstoneInferrerBlock REDSTONE_INFERRER_BLOCK = new RedstoneInferrerBlock();
 	public static final RedstoneCapacitorBlock REDSTONE_CAPACITOR_BLOCK = new RedstoneCapacitorBlock();
 	public static final CuttingBoardBlock CUTTING_BOARD_BLOCK = new CuttingBoardBlock();
+	public static final ForceLoadificatorBlock FORCE_LOADIFICATOR_BLOCK = new ForceLoadificatorBlock();
 	
 	public static BlockEntityType<RedstoneCapacitorBlockEntity> REDSTONE_CAPACITOR_BLOCK_ENTITY;
 	public static BlockEntityType<RedstoneInferrerBlockEntity> REDSTONE_INFERRER_BLOCK_ENTITY;
@@ -55,7 +53,8 @@ public class FabricLitemod implements ModInitializer, ClientModInitializer {
 	public static final BlockWrapper[] ALL_BLOCKS = {
 			REDSTONE_INFERRER_BLOCK,
 			REDSTONE_CAPACITOR_BLOCK,
-			CUTTING_BOARD_BLOCK
+			CUTTING_BOARD_BLOCK,
+			FORCE_LOADIFICATOR_BLOCK
 	};
 	//endregion blocks
 	

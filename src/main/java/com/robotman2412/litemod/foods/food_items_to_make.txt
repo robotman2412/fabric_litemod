@@ -1,7 +1,6 @@
 Food to make:
-tomato
-sliced_tomato
-strawberry
+tomato_plant (block)
+tomato_seeds
 strawberry_bush (block)
 corn_plant (block)
 
@@ -14,6 +13,8 @@ corn_seed
 popcorn
 sugarspinn
 toohot_dogg
+tomato
+sliced_tomato
 
 Kitchen supplies to make:
 blender (block)
