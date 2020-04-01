@@ -12,13 +12,13 @@ corn
 corn_seed
 popcorn
 sugarspinn
-toohot_dogg
+toohot_doggo
 tomato
 sliced_tomato
+ice_cream_scoop
 
 Kitchen supplies to make:
 blender (block)
-ice_cream_scoop
 bowl_mixer (block)
 dough_mixing_head
 mixing_head
