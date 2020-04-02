@@ -4,6 +4,7 @@ import com.robotman2412.litemod.block.*;
 import com.robotman2412.litemod.block.inferrer.InferrerChannelMap;
 import com.robotman2412.litemod.block.inferrer.RedstoneInferrerBlock;
 import com.robotman2412.litemod.block.inferrer.RedstoneInferrerBlockEntity;
+import com.robotman2412.litemod.foods.BLENDOMATOR9000BlockEntity;
 import com.robotman2412.litemod.foods.FoodItem;
 import com.robotman2412.litemod.item.*;
 import com.robotman2412.litemod.item.superweapon.SuperWeapons;
@@ -28,10 +29,15 @@ public class FabricLitemod implements ModInitializer, ClientModInitializer {
 	public static final Identifier SET_TRANSMISSION_PACKET = new Identifier(MOD_ID, "set_transmission");
 	
 	//region items
+	public static final ItemGroup KITCHEN_SUPPLIES = FabricItemGroupBuilder.create(new Identifier("robot_litemod", "kitchen_supplies"))
+			.icon(FabricLitemod::getKitchenKnifeItem)
+			.appendItems(new CustomItemGroupAppender("robot_litemod", "kitchen_supplies"))
+			.build();
+	
 	public static final EssenceOfBullshiteItem ESSENCE_OF_BULLSHITE_ITEM = new EssenceOfBullshiteItem();
 	public static final FrequencyTunerItem FREQUENCY_TUNER_ITEM = new FrequencyTunerItem();
 	public static final RemoteRedstoneInferrerItem REMOTE_REDSTONE_INFERRER_ITEM = new RemoteRedstoneInferrerItem();
-	public static final SimpleItem KITCHEN_KNIFE_ITEM = new SimpleItem(new Item.Settings().maxCount(1).maxDamage(2048), "kitchen_knife");
+	public static final ItemWrapper KITCHEN_KNIFE_ITEM = new ItemWrapper(new Item.Settings().maxCount(1).maxDamage(2048).group(KITCHEN_SUPPLIES), "kitchen_knife");
 	
 	public static final ItemWrapper[] ALL_ITEMS = {
 			ESSENCE_OF_BULLSHITE_ITEM,
@@ -49,6 +55,7 @@ public class FabricLitemod implements ModInitializer, ClientModInitializer {
 	
 	public static BlockEntityType<RedstoneCapacitorBlockEntity> REDSTONE_CAPACITOR_BLOCK_ENTITY;
 	public static BlockEntityType<RedstoneInferrerBlockEntity> REDSTONE_INFERRER_BLOCK_ENTITY;
+	public static BlockEntityType<BLENDOMATOR9000BlockEntity> BLENDOMATOR9000_BLOCK_ENTITY;
 	
 	public static final BlockWrapper[] ALL_BLOCKS = {
 			REDSTONE_INFERRER_BLOCK,
@@ -58,13 +65,9 @@ public class FabricLitemod implements ModInitializer, ClientModInitializer {
 	};
 	//endregion blocks
 	
-	public static final ItemGroup KITCHEN_SUPPLIES = FabricItemGroupBuilder.create(new Identifier("robot_litemod", "kitchen_supplies"))
-			.icon(() -> new ItemStack(KITCHEN_KNIFE_ITEM))
-			.appendItems((stax) -> {
-				stax.add(new ItemStack(KITCHEN_KNIFE_ITEM));
-				stax.add(new ItemStack(CUTTING_BOARD_BLOCK));
-			})
-			.build();
+	private static ItemStack getKitchenKnifeItem() {
+		return new ItemStack(KITCHEN_KNIFE_ITEM);
+	}
 	
 	@Override
 	public void onInitialize() {
@@ -74,6 +77,12 @@ public class FabricLitemod implements ModInitializer, ClientModInitializer {
 		}
 		for (ItemWrapper item : FoodItem.ALL_ITEMS) {
 			Registry.register(Registry.ITEM, item.getIdentifier(), item);
+		}
+		for (BlockWrapper block : FoodItem.ALL_BLOCKS) {
+			Registry.register(Registry.BLOCK, block.getIdentifier(), block);
+			if (block.doBlockItem) {
+				Registry.register(Registry.ITEM, block.getIdentifier(), block.getBlockItem());
+			}
 		}
 		SuperWeapons.registerAll();
 		for (BlockWrapper block : ALL_BLOCKS) {
@@ -88,6 +97,25 @@ public class FabricLitemod implements ModInitializer, ClientModInitializer {
 		REDSTONE_INFERRER_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, MOD_ID + ":inferrer",
 				BlockEntityType.Builder.create(RedstoneInferrerBlockEntity::new, REDSTONE_INFERRER_BLOCK).build(null)
 		);
+		BLENDOMATOR9000_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, MOD_ID + ":blendomator_9000",
+				BlockEntityType.Builder.create(BLENDOMATOR9000BlockEntity::new,
+						FoodItem.BLENDOMATOR_9000_WHITE,
+						FoodItem.BLENDOMATOR_9000_ORANGE,
+						FoodItem.BLENDOMATOR_9000_MAGENTA,
+						FoodItem.BLENDOMATOR_9000_LIGHT_BLUE,
+						FoodItem.BLENDOMATOR_9000_YELLOW,
+						FoodItem.BLENDOMATOR_9000_LIME,
+						FoodItem.BLENDOMATOR_9000_PINK,
+						FoodItem.BLENDOMATOR_9000_GRAY,
+						FoodItem.BLENDOMATOR_9000_LIGHT_GRAY,
+						FoodItem.BLENDOMATOR_9000_CYAN,
+						FoodItem.BLENDOMATOR_9000_PURPLE,
+						FoodItem.BLENDOMATOR_9000_BLUE,
+						FoodItem.BLENDOMATOR_9000_BROWN,
+						FoodItem.BLENDOMATOR_9000_RED,
+						FoodItem.BLENDOMATOR_9000_BLACK
+				).build(null)
+		);
 		ServerSidePacketRegistry.INSTANCE.register(SET_CHANNEL_PACKET, FrequencyTunerItem::PACKIDGE);
 		ServerSidePacketRegistry.INSTANCE.register(SET_TRANSMISSION_PACKET, RemoteRedstoneInferrerItem::PACKIDGE);
 	}
@@ -95,6 +123,9 @@ public class FabricLitemod implements ModInitializer, ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		for (BlockWrapper block : ALL_BLOCKS) {
+			BlockRenderLayerMap.INSTANCE.putBlock(block, block.getRenderLayer());
+		}
+		for (BlockWrapper block : FoodItem.ALL_BLOCKS) {
 			BlockRenderLayerMap.INSTANCE.putBlock(block, block.getRenderLayer());
 		}
 	}

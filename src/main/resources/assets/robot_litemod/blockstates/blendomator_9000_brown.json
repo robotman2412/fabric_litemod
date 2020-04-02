@@ -1,0 +1,8 @@
+{ 
+    "variants": { 
+      "facing=north": { "model": "robot_litemod:block/blendomator_9000/brown", "y": 0 }, 
+      "facing=east": { "model": "robot_litemod:block/blendomator_9000/brown", "y": 90 }, 
+      "facing=south": { "model": "robot_litemod:block/blendomator_9000/brown", "y": 180 }, 
+      "facing=west": { "model": "robot_litemod:block/blendomator_9000/brown", "y": 270 } 
+	} 
+} 

@@ -12,16 +12,24 @@ cupcake_with_whipped_cream_topping
 cupcake_with_whipped_cream_topping_and_sprinkles
 double_chocolate_ice_cream
 double_strawberry_ice_cream
-hamburger
 ice_cream_cone
 lettuce
-peperony_pizza
+peperoni_pizza
 rainbow_cookie
 strawberry_and_chocolate_ice_cream
+snelpoeder
+taccco
+bagel
+corn
+corn_seed
+popcorn
+sugarspinn
+toohot_doggo
+strawberry
+tomato
 strawberry_ice_cream
 
 Ideas:
 for toasted breads, use furnace
 for food coloring, use dyes
-for hamburger meat, use steak
 ice cream will be made with actual ice in the blender
