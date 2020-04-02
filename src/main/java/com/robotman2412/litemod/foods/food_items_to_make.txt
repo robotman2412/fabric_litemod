@@ -1,24 +1,17 @@
 Food to make:
 tomato_plant (block)
-tomato_seeds
 strawberry_bush (block)
 corn_plant (block)
 
 Stuff already drawn but not added:
-snelpoeder
-taccco
-bagel
-corn
-corn_seed
-popcorn
-sugarspinn
-toohot_doggo
-tomato
-sliced_tomato
-ice_cream_scoop
+tomato_seeds
+tomato_plant
 
 Kitchen supplies to make:
 blender (block)
 bowl_mixer (block)
 dough_mixing_head
 mixing_head
+
+Regex: ^([a-z_0-9]+)
+Replacement: public static final ItemWrapper \U$1\E = new FoodItem("$1", hunger, saturation);

@@ -72,7 +72,7 @@ public class FabricLitemod implements ModInitializer, ClientModInitializer {
 		for (ItemWrapper item : ALL_ITEMS) {
 			Registry.register(Registry.ITEM, item.getIdentifier(), item);
 		}
-		for (ItemWrapper item : FoodItem.getAll()) {
+		for (ItemWrapper item : FoodItem.ALL_ITEMS) {
 			Registry.register(Registry.ITEM, item.getIdentifier(), item);
 		}
 		SuperWeapons.registerAll();

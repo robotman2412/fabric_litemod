@@ -4,7 +4,7 @@ import com.robotman2412.litemod.FabricLitemod;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 
-public abstract class ItemWrapper extends Item {
+public class ItemWrapper extends Item {
 	
 	public final String itemName;
 	
