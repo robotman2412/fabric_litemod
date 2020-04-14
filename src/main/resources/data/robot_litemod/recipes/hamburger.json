@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "food_hamburger",
+  "ingredients": [
+    {
+      "item": "robot_litemod:burger_bun"
+    },
+    {
+      "item": "robot_litemod:kitchen_knife"
+    },
+    {
+      "item": "robot_litemod:lettuce"
+    },
+    {
+      "item": "minecraft:cooked_beef"
+    },
+    {
+      "item": "robot_litemod:sliced_tomato"
+    }
+  ],
+  "result": {
+    "item": "robot_litemod:hamburger"
+  }
+}

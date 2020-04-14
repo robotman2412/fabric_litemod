@@ -43,7 +43,6 @@ public class CustomItemGroupAppender implements Consumer<List<ItemStack>> {
 		for (Item item : Registry.ITEM) {
 			ItemGroup itemGroup = item.getGroup();
 			if (itemGroup == group) {
-				System.out.println("Adding item " + Registry.ITEM.getId(item) + " to group " + group.getId());
 				itemStacks.add(new ItemStack(item));
 			}
 		}

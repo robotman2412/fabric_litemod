@@ -4,17 +4,16 @@ strawberry_bush (block)
 corn_plant (block)
 cupcake_batter
 dough
-chocolate_ice
-strawberry_ice
 vanilla_ice
 sprinkles
 cheese
 grated_cheese
 taco_sauce
+whipped_cream
 
 Stuff already drawn but not added:
 tomato_seeds
-tomato_plant
+tomato_plant (block)
 
 Kitchen supplies to make:
 blender (block)

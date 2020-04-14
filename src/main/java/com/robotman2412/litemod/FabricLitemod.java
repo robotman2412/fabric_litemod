@@ -5,19 +5,28 @@ import com.robotman2412.litemod.block.inferrer.InferrerChannelMap;
 import com.robotman2412.litemod.block.inferrer.RedstoneInferrerBlock;
 import com.robotman2412.litemod.block.inferrer.RedstoneInferrerBlockEntity;
 import com.robotman2412.litemod.foods.BLENDOMATOR9000BlockEntity;
+import com.robotman2412.litemod.foods.BlenderRecipe;
 import com.robotman2412.litemod.foods.FoodItem;
-import com.robotman2412.litemod.item.*;
+import com.robotman2412.litemod.gui.BLENDOMATOR9000Screen;
+import com.robotman2412.litemod.item.EssenceOfBullshiteItem;
+import com.robotman2412.litemod.item.FrequencyTunerItem;
+import com.robotman2412.litemod.item.ItemWrapper;
+import com.robotman2412.litemod.item.RemoteRedstoneInferrerItem;
 import com.robotman2412.litemod.item.superweapon.SuperWeapons;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
+import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.event.server.ServerTickCallback;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -27,6 +36,10 @@ public class FabricLitemod implements ModInitializer, ClientModInitializer {
 	
 	public static final Identifier SET_CHANNEL_PACKET = new Identifier(MOD_ID, "set_channel");
 	public static final Identifier SET_TRANSMISSION_PACKET = new Identifier(MOD_ID, "set_transmission");
+	
+	public static final Identifier BLENDOMATOR9000_CONTAINER = new Identifier(MOD_ID, "blendomator_9000");
+	public static final Identifier BLENDER_RECIPE = new Identifier(MOD_ID, "blender");
+	public static RecipeType<BlenderRecipe> BLENDER_RECIPE_TYPE;
 	
 	//region items
 	public static final ItemGroup KITCHEN_SUPPLIES = FabricItemGroupBuilder.create(new Identifier("robot_litemod", "kitchen_supplies"))
@@ -91,6 +104,7 @@ public class FabricLitemod implements ModInitializer, ClientModInitializer {
 				Registry.register(Registry.ITEM, block.getIdentifier(), block.getBlockItem());
 			}
 		}
+		
 		REDSTONE_CAPACITOR_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, MOD_ID + ":capacitor",
 				BlockEntityType.Builder.create(RedstoneCapacitorBlockEntity::new, REDSTONE_CAPACITOR_BLOCK).build(null)
 		);
@@ -116,6 +130,12 @@ public class FabricLitemod implements ModInitializer, ClientModInitializer {
 						FoodItem.BLENDOMATOR_9000_BLACK
 				).build(null)
 		);
+		Registry.register(Registry.RECIPE_TYPE, BLENDER_RECIPE, BLENDER_RECIPE_TYPE = new RecipeType<BlenderRecipe>() {});
+		Registry.register(Registry.RECIPE_SERIALIZER, BLENDER_RECIPE, BlenderRecipe.Serializer.INSTANCE);
+		ContainerProviderRegistry.INSTANCE.registerFactory(BLENDOMATOR9000_CONTAINER, (syncId, id, player, buf) -> {
+			final BlockEntity blockEntity = player.world.getBlockEntity(buf.readBlockPos());
+			return((BLENDOMATOR9000BlockEntity) blockEntity).createMenu(syncId, player.inventory, player);
+		});
 		ServerSidePacketRegistry.INSTANCE.register(SET_CHANNEL_PACKET, FrequencyTunerItem::PACKIDGE);
 		ServerSidePacketRegistry.INSTANCE.register(SET_TRANSMISSION_PACKET, RemoteRedstoneInferrerItem::PACKIDGE);
 	}
@@ -128,6 +148,7 @@ public class FabricLitemod implements ModInitializer, ClientModInitializer {
 		for (BlockWrapper block : FoodItem.ALL_BLOCKS) {
 			BlockRenderLayerMap.INSTANCE.putBlock(block, block.getRenderLayer());
 		}
+		ScreenProviderRegistry.INSTANCE.registerFactory(BLENDOMATOR9000_CONTAINER, BLENDOMATOR9000Screen::new);
 	}
 	
 }

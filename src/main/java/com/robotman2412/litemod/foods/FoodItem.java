@@ -50,6 +50,8 @@ public class FoodItem extends ItemWrapper {
 	public static final ItemWrapper SLICED_TOMATO = new FoodItem("sliced_tomato", 1, 3);
 	public static final ItemWrapper ICE_CREAM_SCOOP = new ItemWrapper(new Settings().group(FabricLitemod.KITCHEN_SUPPLIES), "ice_cream_scoop");
 	public static final ItemWrapper PIZZA_SLICE = new FoodItem("pizza_slice", 1, 1.2f);
+	public static final ItemWrapper CHOCOLATE_ICE = new FoodItem("chocolate_ice", 1, 6, 64);
+	public static final ItemWrapper STRAWBERRY_ICE = new FoodItem("strawberry_ice", 1, 6, 64);
 	
 	/** all food-related items */
 	public static ItemWrapper[] ALL_ITEMS = new ItemWrapper[] {
@@ -84,7 +86,9 @@ public class FoodItem extends ItemWrapper {
 			TOMATO,
 			SLICED_TOMATO,
 			ICE_CREAM_SCOOP,
-			PIZZA_SLICE
+			PIZZA_SLICE,
+			CHOCOLATE_ICE,
+			STRAWBERRY_ICE
 	};
 	//endregion item
 	

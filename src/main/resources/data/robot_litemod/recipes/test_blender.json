@@ -1,0 +1,12 @@
+{
+  "type": "robot_litemod:blender",
+  "ingredients": [
+    {
+      "item": "minecraft:stone"
+    }
+  ],
+  "output": {
+    "item": "minecraft:gravel",
+    "count": 1
+  }
+}

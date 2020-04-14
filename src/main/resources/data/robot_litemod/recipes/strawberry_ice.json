@@ -1,0 +1,21 @@
+{
+  "type": "robot_litemod:blender",
+  "ingredients": [
+    {
+      "item": "minecraft:ice",
+      "count": 2
+    },
+    {
+      "item": "robot_litemod:strawberry",
+      "count": 1
+    },
+    {
+      "item": "minecraft:milk_bucket",
+      "count": 1
+    }
+  ],
+  "output": {
+    "item": "robot_litemod:strawberry_ice",
+    "count": 4
+  }
+}
