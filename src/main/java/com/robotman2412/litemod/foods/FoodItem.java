@@ -37,7 +37,7 @@ public class FoodItem extends ItemWrapper {
 	public static final ItemWrapper RAINBOW_COOKIE = new FoodItem("rainbow_cookie", 10, 10);
 	public static final ItemWrapper STRAWBERRY_AND_CHOCOLATE_ICE_CREAM = new FoodItem("strawberry_and_chocolate_ice_cream", 2, 8);
 	public static final ItemWrapper STRAWBERRY_ICE_CREAM = new FoodItem("strawberry_ice_cream", 2, 8);
-	public static final ItemWrapper SNELPOEDER = new FoodItem("snelpoeder", 0, 0); //TODO: apply potion effects
+	public static final ItemWrapper SNELPOEDER = new SNELPOEDER(); //TODO: apply potion effects
 	public static final ItemWrapper TACCCO = new FoodItem("taccco", 6, 6);
 	public static final ItemWrapper BAGEL = new FoodItem("bagel", 5, 3);
 	public static final ItemWrapper CORN = new FoodItem("corn", 2, 2);

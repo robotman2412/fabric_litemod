@@ -26,6 +26,7 @@
     ]
   },
   "mixins": [
+    "robot_litemod.mixins.json"
   ],
 
   "depends": {

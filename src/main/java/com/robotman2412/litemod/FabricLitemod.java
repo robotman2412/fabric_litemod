@@ -4,6 +4,8 @@ import com.robotman2412.litemod.block.*;
 import com.robotman2412.litemod.block.inferrer.InferrerChannelMap;
 import com.robotman2412.litemod.block.inferrer.RedstoneInferrerBlock;
 import com.robotman2412.litemod.block.inferrer.RedstoneInferrerBlockEntity;
+import com.robotman2412.litemod.effect.HealthConfusionEffect;
+import com.robotman2412.litemod.effect.StatusEffexWrapper;
 import com.robotman2412.litemod.foods.BLENDOMATOR9000BlockEntity;
 import com.robotman2412.litemod.foods.BlenderRecipe;
 import com.robotman2412.litemod.foods.FoodItem;
@@ -40,6 +42,14 @@ public class FabricLitemod implements ModInitializer, ClientModInitializer {
 	public static final Identifier BLENDOMATOR9000_CONTAINER = new Identifier(MOD_ID, "blendomator_9000");
 	public static final Identifier BLENDER_RECIPE = new Identifier(MOD_ID, "blender");
 	public static RecipeType<BlenderRecipe> BLENDER_RECIPE_TYPE;
+	
+	//region effex
+	public static final StatusEffexWrapper HEALTH_CONFUSION = new HealthConfusionEffect();
+	
+	public static final StatusEffexWrapper[] ALL_EFFEX = new StatusEffexWrapper[] {
+		HEALTH_CONFUSION
+	};
+	//endregion effex
 	
 	//region items
 	public static final ItemGroup KITCHEN_SUPPLIES = FabricItemGroupBuilder.create(new Identifier("robot_litemod", "kitchen_supplies"))
@@ -84,6 +94,9 @@ public class FabricLitemod implements ModInitializer, ClientModInitializer {
 	
 	@Override
 	public void onInitialize() {
+		for (StatusEffexWrapper wrapper : ALL_EFFEX) {
+			Registry.register(Registry.STATUS_EFFECT, wrapper.getIdentifier(), wrapper);
+		}
 		ServerTickCallback.EVENT.register(InferrerChannelMap::tick);
 		for (ItemWrapper item : ALL_ITEMS) {
 			Registry.register(Registry.ITEM, item.getIdentifier(), item);

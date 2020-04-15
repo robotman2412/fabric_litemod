@@ -1,5 +1,4 @@
 Food to make:
-tomato_plant (block)
 strawberry_bush (block)
 corn_plant (block)
 cupcake_batter
