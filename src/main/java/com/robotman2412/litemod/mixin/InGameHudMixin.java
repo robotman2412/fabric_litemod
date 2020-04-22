@@ -1,7 +1,7 @@
 package com.robotman2412.litemod.mixin;
 
 import com.robotman2412.litemod.FabricLitemod;
-import com.robotman2412.litemod.gui.DrunknessHelper;
+import com.robotman2412.litemod.util.Utils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawableHelper;
@@ -29,7 +29,6 @@ public class InGameHudMixin extends DrawableHelper {
 	
 	@Inject(at = @At("HEAD"), method = "renderStatusBars()V")
 	public void onRenderStatusBars(CallbackInfo ci) {
-		GameRe
 		if (getCameraPlayer() != null) {
 			int level = 0;
 			if (getCameraPlayer().hasStatusEffect(FabricLitemod.HEALTH_CONFUSION)) {
@@ -38,10 +37,10 @@ public class InGameHudMixin extends DrawableHelper {
 			}
 			long millis = System.currentTimeMillis();
 			if (millis > flmLastUpdate + 50) {
-				if (DrunknessHelper.healthConfusion < level) {
-					DrunknessHelper.healthConfusion++;
-				} else if (DrunknessHelper.healthConfusion > level) {
-					DrunknessHelper.healthConfusion--;
+				if (Utils.healthConfusion < level) {
+					Utils.healthConfusion++;
+				} else if (Utils.healthConfusion > level) {
+					Utils.healthConfusion--;
 				}
 				flmLastUpdate = millis;
 			}
@@ -50,8 +49,8 @@ public class InGameHudMixin extends DrawableHelper {
 	
 	@Redirect(at = @At(value="INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;blit(IIIIII)V"), method = "renderStatusBars()V")
 	public void blitProxy(InGameHud hudOn, int x, int y, int u, int v, int width, int height) {
-		if (getCameraPlayer() != null && DrunknessHelper.healthConfusion > 0 && DrunknessHelper.isHeartUv(u, v)) {
-			float level = DrunknessHelper.healthConfusion / 4f;
+		if (getCameraPlayer() != null && Utils.healthConfusion > 0 && Utils.isHeartUv(u, v)) {
+			float level = Utils.healthConfusion / 4f;
 			long millis = System.currentTimeMillis();
 			double time0 = 1500f + (x - scaledWidth / 2.5 + y % 10);
 			double angle0 = millis % time0 / time0 * Math.PI * 2;

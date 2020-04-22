@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "robot_litemod:movable_repeater"
+    ]
+  },
+  "criteria": {
+    "has_ender_eye": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:scaffolding"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "robot_litemod:movable_repeater"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ender_eye",
+      "has_the_recipe"
+    ]
+  ]
+}

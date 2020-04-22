@@ -23,8 +23,8 @@ public class SNELPOEDER extends ItemWrapper {
 		if (user.world.isClient) {
 			user.sendMessage(new LiteralText("HA! cocaine."));
 		}
-		user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 400, 1, true, false));
-		user.addStatusEffect(new StatusEffectInstance(FabricLitemod.HEALTH_CONFUSION, 400, 20, true, false));
+		user.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 10000, 8, true, false));
+		user.addStatusEffect(new StatusEffectInstance(FabricLitemod.HEALTH_CONFUSION, 10000, 20, true, false));
 		stack.decrement(1);
 		return stack;
 	}

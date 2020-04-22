@@ -1,7 +1,7 @@
 package com.robotman2412.litemod.block.inferrer;
 
 import com.robotman2412.litemod.FabricLitemod;
-import com.robotman2412.litemod.RelativeDirection;
+import com.robotman2412.litemod.util.RelativeDirection;
 import com.robotman2412.litemod.block.ChannelIdentifier;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -38,6 +38,7 @@ public class RedstoneInferrerBlockEntity extends BlockEntity implements Tickable
 		if (!sending) {
 			boolean nowPowered = channels.isChannelPowered(channel);
 			if (nowPowered != powered) {
+				markDirty();
 				powered = nowPowered;
 				BlockState state = world.getBlockState(pos);
 				world.setBlockState(pos, state.with(Properties.POWERED, powered));
@@ -76,6 +77,11 @@ public class RedstoneInferrerBlockEntity extends BlockEntity implements Tickable
 			channels.powerChannel(channel, nowPowered, senderId);
 		}
 		powered = nowPowered;
+	}
+	
+	@Override
+	public boolean shouldNotCopyTagFromItem() {
+		return true;
 	}
 	
 	@Override

@@ -58,6 +58,11 @@ public class BLENDOMATOR9000Screen extends ContainerScreen<BLENDOMATOR9000Contai
 				bottomOffset += leHeight;
 			}
 		}
+		
+		String sTitle = getTitle().asFormattedString();
+		float txWidth = font.getStringWidth(sTitle);
+		font.draw(sTitle, x + containerWidth / 2f - txWidth / 2f, y + 6, 0x404040);
+		
 	}
 	
 	@Override

@@ -6,7 +6,13 @@
   "mixins": [
   ],
   "client": [
-    "InGameHudMixin"
+    "InGameHudMixin",
+    "GameRendererMixin",
+    "PlayerEntityMixin",
+    "DamageTrackerMixin",
+    "Schema2100Mixin",
+    "RedstoneWireBlockMixin",
+    "BlockColorsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

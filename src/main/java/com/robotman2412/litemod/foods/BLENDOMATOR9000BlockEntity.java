@@ -1,6 +1,6 @@
 package com.robotman2412.litemod.foods;
 
-import com.robotman2412.litemod.CountedIngredient;
+import com.robotman2412.litemod.util.CountedIngredient;
 import com.robotman2412.litemod.FabricLitemod;
 import com.robotman2412.litemod.gui.BLENDOMATOR9000Container;
 import net.fabricmc.fabric.api.registry.FuelRegistry;

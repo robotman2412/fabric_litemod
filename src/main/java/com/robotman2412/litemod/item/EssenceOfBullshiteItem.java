@@ -1,7 +1,7 @@
 package com.robotman2412.litemod.item;
 
-import com.robotman2412.litemod.IRedstoneInfo;
-import com.robotman2412.litemod.PowerResult;
+import com.robotman2412.litemod.util.IRedstoneInfo;
+import com.robotman2412.litemod.util.PowerResult;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.CommandBlockBlockEntity;

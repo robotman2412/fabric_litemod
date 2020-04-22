@@ -1,7 +1,7 @@
 package com.robotman2412.litemod.block;
 
 import com.robotman2412.litemod.FabricLitemod;
-import com.robotman2412.litemod.IRedstoneInfo;
+import com.robotman2412.litemod.util.IRedstoneInfo;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
@@ -28,11 +28,12 @@ public class RedstoneCapacitorBlockEntity extends BlockEntity implements Tickabl
 		tag.putBoolean("locked", isLocked);
 		tag.putInt("decrement_in", decrementTimer);
 		tag.putInt("power_in", powerLevelIn);
-		return tag;
+		return super.toTag(tag);
 	}
 	
 	@Override
 	public void fromTag(CompoundTag tag) {
+		super.fromTag(tag);
 		powerLevel = tag.getInt("power");
 		isLocked = tag.getBoolean("locked");
 		decrementTimer = tag.getInt("decrement_in");
@@ -55,6 +56,7 @@ public class RedstoneCapacitorBlockEntity extends BlockEntity implements Tickabl
 			}
 		}
 		if (sendUpdate) {
+			markDirty();
 			BlockState state = world.getBlockState(getPos());
 			Direction facing = state.get(Properties.HORIZONTAL_FACING);
 			BlockPos frontPos = getPos().add(facing.getOffsetX(), 0, facing.getOffsetZ());

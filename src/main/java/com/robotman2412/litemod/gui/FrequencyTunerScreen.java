@@ -212,6 +212,14 @@ public class FrequencyTunerScreen extends Screen {
 		}
 		
 		@Override
+		public void renderButton(int mouseX, int mouseY, float delta) {
+			active = isChannelAvailable();
+			if (active) {
+				super.renderButton(mouseX, mouseY, delta);
+			}
+		}
+		
+		@Override
 		public TexturePosition getTexturePosition() {
 			int i = (isBig ? 1 : 0) | (isChannelOn() ? 2 : 0) | (isSelected() ? 4 : 0);
 			switch (i) {
@@ -235,17 +243,23 @@ public class FrequencyTunerScreen extends Screen {
 			return super.getTexturePosition();
 		}
 		
-		private boolean isSelected() {
+		public boolean isSelected() {
 			return isBig ? selectedPrivate == channel : (selectedPublic - selectedPublicPage * 256) == channel;
 		}
 		
-		private boolean isChannelOn() {
+		public boolean isChannelOn() {
 //			if (channel == 1 && !isBig) {
 //				System.out.println("Least: " + ownerUUID.getLeastSignificantBits());
 //				System.out.println("Most: " + ownerUUID.getMostSignificantBits());
 //			}
 			ChannelIdentifier channelID = isBig ? new ChannelIdentifier(channel, ownerUUID) : new ChannelIdentifier(channel + selectedPublicPage * 256);
 			return RedstoneInferrerBlockEntity.isChannelOn(channelID);
+		}
+		
+		public boolean isChannelAvailable() {
+			int maxChannel = isBig ? FrequencyTunerItem.getMaximumPrivateChannel() : FrequencyTunerItem.getMaximumPublicChannel();
+			int actualChannel = isBig ? (selectedPublic + selectedPublicPage * 256) : selectedPrivate;
+			return actualChannel <= maxChannel;
 		}
 		
 	}

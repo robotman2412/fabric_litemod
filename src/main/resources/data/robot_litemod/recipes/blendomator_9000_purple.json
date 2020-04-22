@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "redstone_redstone_capacitor",
+  "pattern": [
+    "GIG",
+    "GIG",
+    "CFC"
+  ],
+  "key": {
+    "G": {
+      "tag": "robot_litemod:glass"
+    },
+    "I": {
+      "item": "minecraft:iron_nugget"
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    },
+    "C": {
+      "item": "minecraft:purple_concrete"
+    }
+  },
+  "result": {
+    "item": "robot_litemod:blendomator_9000_purple"
+  }
+}

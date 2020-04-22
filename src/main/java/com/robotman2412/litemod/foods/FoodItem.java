@@ -54,7 +54,7 @@ public class FoodItem extends ItemWrapper {
 	public static final ItemWrapper STRAWBERRY_ICE = new FoodItem("strawberry_ice", 1, 6, 64);
 	
 	/** all food-related items */
-	public static ItemWrapper[] ALL_ITEMS = new ItemWrapper[] {
+	public static final ItemWrapper[] ALL_ITEMS = new ItemWrapper[] {
 			BEIGETS,
 			BURGER_BUN,
 			CHOCOLATE_AND_STRAWBERRY_ICE_CREAM,
@@ -93,21 +93,22 @@ public class FoodItem extends ItemWrapper {
 	//endregion item
 	
 	//region block
-	public static final BlockWrapper BLENDOMATOR_9000_WHITE = new BLENDOMATOR9000("white");
-	public static final BlockWrapper BLENDOMATOR_9000_ORANGE = new BLENDOMATOR9000("orange");
-	public static final BlockWrapper BLENDOMATOR_9000_MAGENTA = new BLENDOMATOR9000("magenta");
-	public static final BlockWrapper BLENDOMATOR_9000_LIGHT_BLUE = new BLENDOMATOR9000("light_blue");
-	public static final BlockWrapper BLENDOMATOR_9000_YELLOW = new BLENDOMATOR9000("yellow");
-	public static final BlockWrapper BLENDOMATOR_9000_LIME = new BLENDOMATOR9000("lime");
-	public static final BlockWrapper BLENDOMATOR_9000_PINK = new BLENDOMATOR9000("pink");
-	public static final BlockWrapper BLENDOMATOR_9000_GRAY = new BLENDOMATOR9000("gray");
-	public static final BlockWrapper BLENDOMATOR_9000_LIGHT_GRAY = new BLENDOMATOR9000("light_gray");
-	public static final BlockWrapper BLENDOMATOR_9000_CYAN = new BLENDOMATOR9000("cyan");
-	public static final BlockWrapper BLENDOMATOR_9000_PURPLE = new BLENDOMATOR9000("purple");
-	public static final BlockWrapper BLENDOMATOR_9000_BLUE = new BLENDOMATOR9000("blue");
-	public static final BlockWrapper BLENDOMATOR_9000_BROWN = new BLENDOMATOR9000("brown");
-	public static final BlockWrapper BLENDOMATOR_9000_RED = new BLENDOMATOR9000("red");
-	public static final BlockWrapper BLENDOMATOR_9000_BLACK = new BLENDOMATOR9000("black");
+	public static final BlockWrapper BLENDOMATOR_9000_WHITE = new BLENDOMATOR9000("white", "\u00A7f");
+	public static final BlockWrapper BLENDOMATOR_9000_ORANGE = new BLENDOMATOR9000("orange", "\u00A76");
+	public static final BlockWrapper BLENDOMATOR_9000_MAGENTA = new BLENDOMATOR9000("magenta", "\u00A75");
+	public static final BlockWrapper BLENDOMATOR_9000_LIGHT_BLUE = new BLENDOMATOR9000("light_blue", "\u00A7b");
+	public static final BlockWrapper BLENDOMATOR_9000_YELLOW = new BLENDOMATOR9000("yellow", "\u00A7e");
+	public static final BlockWrapper BLENDOMATOR_9000_LIME = new BLENDOMATOR9000("lime", "\u00A7a");
+	public static final BlockWrapper BLENDOMATOR_9000_PINK = new BLENDOMATOR9000("pink", "\u00A7d");
+	public static final BlockWrapper BLENDOMATOR_9000_GRAY = new BLENDOMATOR9000("gray", "\u00A78");
+	public static final BlockWrapper BLENDOMATOR_9000_LIGHT_GRAY = new BLENDOMATOR9000("light_gray", "\u00A77");
+	public static final BlockWrapper BLENDOMATOR_9000_CYAN = new BLENDOMATOR9000("cyan", "\u00A73");
+	public static final BlockWrapper BLENDOMATOR_9000_PURPLE = new BLENDOMATOR9000("purple", "\u00A75");
+	public static final BlockWrapper BLENDOMATOR_9000_BLUE = new BLENDOMATOR9000("blue", "\u00A71");
+	public static final BlockWrapper BLENDOMATOR_9000_BROWN = new BLENDOMATOR9000("brown", "\u00A76");
+	public static final BlockWrapper BLENDOMATOR_9000_GREEN = new BLENDOMATOR9000("green", "\u00A7a");
+	public static final BlockWrapper BLENDOMATOR_9000_RED = new BLENDOMATOR9000("red", "\u00A74");
+	public static final BlockWrapper BLENDOMATOR_9000_BLACK = new BLENDOMATOR9000("black", "\u00A70");
 	
 	public static final BlockWrapper[] ALL_BLOCKS = {
 			BLENDOMATOR_9000_WHITE,
@@ -123,6 +124,7 @@ public class FoodItem extends ItemWrapper {
 			BLENDOMATOR_9000_PURPLE,
 			BLENDOMATOR_9000_BLUE,
 			BLENDOMATOR_9000_BROWN,
+			BLENDOMATOR_9000_GREEN,
 			BLENDOMATOR_9000_RED,
 			BLENDOMATOR_9000_BLACK
 	};

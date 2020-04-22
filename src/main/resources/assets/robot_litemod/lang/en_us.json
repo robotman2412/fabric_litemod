@@ -4,6 +4,7 @@
   "item.robot_litemod.frequency_tuner": "Frequency tuner",
   "item.robot_litemod.kitchen_knife": "Kitchen knife",
   "item.robot_litemod.remote_redstone_inferrer": "Handheld redstone inferrer",
+  "item.robot_litemod.slime_compass": "Slime spawn compass",
 
   "item.robot_litemod.beigets": "Beigets",
   "item.robot_litemod.burger_bun": "Burger bun",
@@ -32,9 +33,57 @@
   "block.robot_litemod.redstone_capacitor": "Redstone capacitor",
   "block.robot_litemod.redstone_inferrer": "Redstone inferrer",
   "block.robot_litemod.cutting_board": "Cutting board",
+  
+  "block.robot_litemod.blendomator_9000_white": "The BLENDOMATOR 9000!",
+  "block.robot_litemod.blendomator_9000_orange": "The BLENDOMATOR 9000!",
+  "block.robot_litemod.blendomator_9000_magenta": "The BLENDOMATOR 9000!",
+  "block.robot_litemod.blendomator_9000_light_blue": "The BLENDOMATOR 9000!",
+  "block.robot_litemod.blendomator_9000_yellow": "The BLENDOMATOR 9000!",
+  "block.robot_litemod.blendomator_9000_lime": "The BLENDOMATOR 9000!",
+  "block.robot_litemod.blendomator_9000_pink": "The BLENDOMATOR 9000!",
+  "block.robot_litemod.blendomator_9000_gray": "The BLENDOMATOR 9000!",
+  "block.robot_litemod.blendomator_9000_light_gray": "The BLENDOMATOR 9000!",
+  "block.robot_litemod.blendomator_9000_cyan": "The BLENDOMATOR 9000!",
+  "block.robot_litemod.blendomator_9000_purple": "The BLENDOMATOR 9000!",
+  "block.robot_litemod.blendomator_9000_blue": "The BLENDOMATOR 9000!",
+  "block.robot_litemod.blendomator_9000_brown": "The BLENDOMATOR 9000!",
+  "block.robot_litemod.blendomator_9000_green": "The BLENDOMATOR 9000!",
+  "block.robot_litemod.blendomator_9000_red": "The BLENDOMATOR 9000!",
+  "block.robot_litemod.blendomator_9000_black": "The BLENDOMATOR 9000!",
 
+  "block.robot_litemod.factory": "Factory block",
+  "block.robot_litemod.movable_repeater": "Movable redstone repeater",
+  "block.robot_litemod.movable_comparator": "Movable comparator",
+  "block.robot_litemod.movable_redstone_wire": "Movable redstone wire",
+  "block.robot_litemod.movable_redstone_capacitor": "Movable redstone capacitor",
+  "block.robot_litemod.movable_redstone_inferrer": "Movable redstone inferrer",
+  
   "robot_litemod.gui.frequency_tuner.private": "Private",
   "robot_litemod.gui.frequency_tuner.public": "Public",
-  "robot_litemod.gui.frequency_tuner.channel_selected": "Channel"
+  "robot_litemod.gui.frequency_tuner.channel_selected": "Channel",
+  
+  "block.robot_litemod.redstone_inferrer.tx": "Sender on ",
+  "block.robot_litemod.redstone_inferrer.rx": "Reciever on ",
+  
+  "robot_litemod.inferrer_channel_private": "'s private channel ",
+  "robot_litemod.inferrer_channel_public": "public channel ",
+
+  "death.robot_litemod.escaping": " while escaping ",
+  "death.robot_litemod.using_item": " using ",
+
+  "death.robot_litemod.drug.explosive": " fooled around with explosives too much while on drugs",
+  "death.robot_litemod.drug.explosive_combat": " was too drugged to not be blown up by ",
+  "death.robot_litemod.drug.fire": " didn't notice the fire",
+  "death.robot_litemod.drug.projectile": " didn't see the shot coming from ",
+  "death.robot_litemod.drug.bitchslap": " was so drugged theygot bitchslapped to death by ",
+  "death.robot_litemod.drug.surprise_mob": " didn't see ",
+  "death.robot_litemod.drug.surprise_mob.suffix": " coming",
+  "death.robot_litemod.drug.drown": " forgot they can't breathe underwater",
+  "death.robot_litemod.drug.fall": " was a little too dizzy to be on a high place",
+  "death.robot_litemod.drug.flying": " was a little too dizzy to fly",
+  "death.robot_litemod.drug.cactus": " was so dizzy they fell into a cactus",
+  "death.robot_litemod.drug.lava": " mistook the lava for diamonds",
+  "death.robot_litemod.drug.fireworks": " was too stoned at the new years party",
+  "death.robot_litemod.drug.bitchfight_lost": " lost the stoned bitchfight with "
 
 }

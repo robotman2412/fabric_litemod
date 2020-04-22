@@ -1,0 +1,6 @@
+{
+    "parent": "robot_litemod:block/movable_redstone_wire/side",
+    "textures": {
+        "line": "block/redstone_dust_line0"
+    }
+}

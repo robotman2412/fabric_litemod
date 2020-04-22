@@ -2,7 +2,7 @@ package com.robotman2412.litemod.foods;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.robotman2412.litemod.CountedIngredient;
+import com.robotman2412.litemod.util.CountedIngredient;
 import com.robotman2412.litemod.FabricLitemod;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

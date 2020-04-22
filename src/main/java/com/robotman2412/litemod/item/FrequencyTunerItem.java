@@ -29,9 +29,27 @@ public class FrequencyTunerItem extends ItemWrapper implements FrequencyTunableI
 	/** This is actually checked. */
 	public static final int MINIMUM_CHANNEL = 1;
 	/** Inclusive.<br>32x32 grid. */
-	public static final int MAXIMUM_PUBLIC_CHANNEL = 1024;
-	/** Inclusive.<br>5x5 grid. */
-	public static final int MAXIMUM_PERSONAL_CHANNEL = 16;
+	public static final int DEFAULT_MAXIMUM_PUBLIC_CHANNEL = 1024;
+	/** Inclusive.<br>4x4 grid. */
+	public static final int DEFAULT_MAXIMUM_PERSONAL_CHANNEL = 16;
+	
+	/**
+	 * This method is here to allow server owners to add additional restrictions.
+	 * Maximum channels are inclusive.
+	 * @return 0 to 1024 (inclusive)
+	 */
+	public static int getMaximumPublicChannel() {
+		return DEFAULT_MAXIMUM_PUBLIC_CHANNEL;
+	}
+	
+	/**
+	 * This method is here to allow server owners to add additional restrictions.
+	 * Maximum channels are inclusive.
+	 * @return 0 to 16 (inclusive)
+	 */
+	public static int getMaximumPrivateChannel() {
+		return DEFAULT_MAXIMUM_PERSONAL_CHANNEL;
+	}
 	
 	public FrequencyTunerItem() {
 		super(new Settings().maxCount(1).group(ItemGroup.REDSTONE), "frequency_tuner");
@@ -41,6 +59,10 @@ public class FrequencyTunerItem extends ItemWrapper implements FrequencyTunableI
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		ItemStack stack = user.getStackInHand(hand);
 		ChannelIdentifier channel = getChannel(stack);
+		//anti hax lol
+		if (!channel.isWithinBounds()) {
+			return TypedActionResult.fail(stack);
+		}
 		if (user.getEntityWorld().isClient()) {
 			MinecraftClient.getInstance().openScreen(new FrequencyTunerScreen((ClientPlayerEntity) user, channel, hand));
 			return TypedActionResult.pass(stack);
@@ -79,8 +101,7 @@ public class FrequencyTunerItem extends ItemWrapper implements FrequencyTunableI
 		if (tag == null || !tag.contains("channel")) {
 			return new ChannelIdentifier(MINIMUM_CHANNEL);
 		}
-		ChannelIdentifier channel = new ChannelIdentifier(tag.getCompound("channel"));
-		return channel;
+		return new ChannelIdentifier(tag.getCompound("channel"));
 	}
 	
 	public static void setChannelForPlayer(PlayerEntity player, int channelID, boolean isPrivate, Hand hand) {
@@ -93,6 +114,9 @@ public class FrequencyTunerItem extends ItemWrapper implements FrequencyTunableI
 		}
 	}
 	
+	/**
+	 * Called by minecraft when a package is recieved.
+	 */
 	public static void PACKIDGE(PacketContext context, PacketByteBuf data) {
 		boolean isPrivate = data.readBoolean(); //is channel private
 		int id = data.readInt(); //channel number
@@ -100,15 +124,18 @@ public class FrequencyTunerItem extends ItemWrapper implements FrequencyTunableI
 		if (id < MINIMUM_CHANNEL) {
 			return;
 		}
-		else if (isPrivate && id > MAXIMUM_PERSONAL_CHANNEL) {
+		else if (isPrivate && id > getMaximumPrivateChannel()) {
 			return;
 		}
-		else if (id > MAXIMUM_PUBLIC_CHANNEL) {
+		else if (id > getMaximumPublicChannel()) {
 			return;
 		}
 		setChannelForPlayer(context.getPlayer(), id, isPrivate, hand);
 	}
 	
+	/**
+	 * Called by the client to signal a frequency change.
+	 */
 	public static void SENTPACKIDGE(int channel, boolean isPrivate, Hand hand) {
 		PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
 		buffer.writeBoolean(isPrivate); //is channel private

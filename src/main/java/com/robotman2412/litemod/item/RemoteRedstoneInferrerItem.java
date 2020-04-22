@@ -119,13 +119,14 @@ public class RemoteRedstoneInferrerItem extends ItemWrapper implements Transmiss
 		boolean isPrivate = data.readBoolean(); //is channel private
 		int id = data.readInt(); //channel number
 		Hand hand = data.readBoolean() ? Hand.MAIN_HAND : Hand.OFF_HAND; //is held in main hand
+		//antihax
 		if (id < FrequencyTunerItem.MINIMUM_CHANNEL) {
 			return;
 		}
-		else if (isPrivate && id > FrequencyTunerItem.MAXIMUM_PERSONAL_CHANNEL) {
+		else if (isPrivate && id > FrequencyTunerItem.getMaximumPrivateChannel()) {
 			return;
 		}
-		else if (id > FrequencyTunerItem.MAXIMUM_PUBLIC_CHANNEL) {
+		else if (id > FrequencyTunerItem.getMaximumPrivateChannel()) {
 			return;
 		}
 		int pulseLength = data.readInt(); //redstone tick transmission bit duration

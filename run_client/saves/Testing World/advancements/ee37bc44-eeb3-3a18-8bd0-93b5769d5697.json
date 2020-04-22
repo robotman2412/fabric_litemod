@@ -35,9 +35,9 @@
     },
     "done": true
   },
-  "minecraft:recipes/building_blocks/purple_concrete_powder": {
+  "minecraft:recipes/tools/compass": {
     "criteria": {
-      "has_sand": "2020-03-24 18:55:25 +0100"
+      "has_redstone": "2020-03-24 17:05:58 +0100"
     },
     "done": true
   },
@@ -47,9 +47,9 @@
     },
     "done": true
   },
-  "minecraft:recipes/tools/compass": {
+  "minecraft:recipes/building_blocks/purple_concrete_powder": {
     "criteria": {
-      "has_redstone": "2020-03-24 17:05:58 +0100"
+      "has_sand": "2020-03-24 18:55:25 +0100"
     },
     "done": true
   },
@@ -89,15 +89,15 @@
     },
     "done": false
   },
-  "minecraft:recipes/building_blocks/sandstone": {
-    "criteria": {
-      "has_sand": "2020-03-24 18:55:25 +0100"
-    },
-    "done": true
-  },
   "minecraft:recipes/redstone/redstone": {
     "criteria": {
       "has_redstone_block": "2020-03-24 17:19:53 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/sandstone": {
+    "criteria": {
+      "has_sand": "2020-03-24 18:55:25 +0100"
     },
     "done": true
   },
@@ -110,6 +110,12 @@
   "minecraft:recipes/redstone/redstone_torch": {
     "criteria": {
       "has_redstone": "2020-03-24 17:05:58 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/chest": {
+    "criteria": {
+      "has_lots_of_items": "2020-04-18 18:16:51 +0200"
     },
     "done": true
   },

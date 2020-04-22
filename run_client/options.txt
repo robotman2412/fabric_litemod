@@ -32,7 +32,7 @@ biomeBlendRadius:2
 renderClouds:true
 resourcePacks:["vanilla","file/universal-no-vigenette"]
 incompatibleResourcePacks:["file/universal-no-vigenette"]
-lastServer:
+lastServer:mc.ltt.gg
 lang:en_us
 chatVisibility:0
 chatOpacity:1.0
@@ -40,7 +40,7 @@ textBackgroundOpacity:0.5
 backgroundForChatOnly:true
 hideServerAddress:false
 advancedItemTooltips:true
-pauseOnLostFocus:true
+pauseOnLostFocus:false
 overrideWidth:0
 overrideHeight:0
 heldItemTooltips:true

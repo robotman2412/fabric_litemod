@@ -7,7 +7,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 
-public abstract class BlockWrapper extends Block {
+public class BlockWrapper extends Block {
 	
 	public final String blockName;
 	public final boolean doBlockItem;
@@ -22,7 +22,9 @@ public abstract class BlockWrapper extends Block {
 		return RenderLayer.getSolid();
 	}
 	
-	public abstract Item.Settings getItemSettings();
+	public Item.Settings getItemSettings() {
+		return new Item.Settings();
+	}
 	
 	public Identifier getIdentifier() {
 		return new Identifier(FabricLitemod.MOD_ID, blockName);

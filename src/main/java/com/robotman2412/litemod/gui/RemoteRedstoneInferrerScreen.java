@@ -87,7 +87,7 @@ public class RemoteRedstoneInferrerScreen extends FrequencyTunerScreen {
 			decrementLength.active = false;
 		}
 		if (bitLength >= maxDelay) {
-			bitLength = maxBits;
+			bitLength = maxDelay;
 			incrementLength.active = false;
 		}
 		for (int i = 0; i < 6; i++) {

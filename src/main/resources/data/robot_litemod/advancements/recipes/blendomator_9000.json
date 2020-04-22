@@ -1,0 +1,40 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "robot_litemod:blendomator_9000_white",
+      "robot_litemod:blendomator_9000_orange",
+      "robot_litemod:blendomator_9000_magenta",
+      "robot_litemod:blendomator_9000_light_blue",
+      "robot_litemod:blendomator_9000_yellow",
+      "robot_litemod:blendomator_9000_lime",
+      "robot_litemod:blendomator_9000_pink",
+      "robot_litemod:blendomator_9000_gray",
+      "robot_litemod:blendomator_9000_light_gray",
+      "robot_litemod:blendomator_9000_cyan",
+      "robot_litemod:blendomator_9000_purple",
+      "robot_litemod:blendomator_9000_blue",
+      "robot_litemod:blendomator_9000_brown",
+      "robot_litemod:blendomator_9000_green",
+      "robot_litemod:blendomator_9000_red",
+      "robot_litemod:blendomator_9000_black"
+    ]
+  },
+  "criteria": {
+    "has_stuff": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:iron_nugget"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_stuff"
+    ]
+  ]
+}

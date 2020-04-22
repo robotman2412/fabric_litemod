@@ -4,27 +4,38 @@ import com.robotman2412.litemod.block.*;
 import com.robotman2412.litemod.block.inferrer.InferrerChannelMap;
 import com.robotman2412.litemod.block.inferrer.RedstoneInferrerBlock;
 import com.robotman2412.litemod.block.inferrer.RedstoneInferrerBlockEntity;
+import com.robotman2412.litemod.block.pushableredstone.PushaParator;
+import com.robotman2412.litemod.block.pushableredstone.PushaPeater;
+import com.robotman2412.litemod.block.pushableredstone.PushaRedstone;
 import com.robotman2412.litemod.effect.HealthConfusionEffect;
 import com.robotman2412.litemod.effect.StatusEffexWrapper;
+import com.robotman2412.litemod.entity.TestLivingEntity;
+import com.robotman2412.litemod.entity.TestLivingEntityRenderer;
 import com.robotman2412.litemod.foods.BLENDOMATOR9000BlockEntity;
 import com.robotman2412.litemod.foods.BlenderRecipe;
 import com.robotman2412.litemod.foods.FoodItem;
 import com.robotman2412.litemod.gui.BLENDOMATOR9000Screen;
-import com.robotman2412.litemod.item.EssenceOfBullshiteItem;
-import com.robotman2412.litemod.item.FrequencyTunerItem;
-import com.robotman2412.litemod.item.ItemWrapper;
-import com.robotman2412.litemod.item.RemoteRedstoneInferrerItem;
+import com.robotman2412.litemod.item.*;
 import com.robotman2412.litemod.item.superweapon.SuperWeapons;
+import com.robotman2412.litemod.util.CustomItemGroupAppender;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.event.server.ServerTickCallback;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.minecraft.SharedConstants;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.entity.EntityCategory;
+import net.minecraft.entity.EntityType;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -33,6 +44,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class FabricLitemod implements ModInitializer, ClientModInitializer {
+	
+	public static final int WORLD_VERSION = SharedConstants.getGameVersion().getWorldVersion();
 	
 	public static final String MOD_ID = "robot_litemod";
 	
@@ -61,12 +74,14 @@ public class FabricLitemod implements ModInitializer, ClientModInitializer {
 	public static final FrequencyTunerItem FREQUENCY_TUNER_ITEM = new FrequencyTunerItem();
 	public static final RemoteRedstoneInferrerItem REMOTE_REDSTONE_INFERRER_ITEM = new RemoteRedstoneInferrerItem();
 	public static final ItemWrapper KITCHEN_KNIFE_ITEM = new ItemWrapper(new Item.Settings().maxCount(1).maxDamage(2048).group(KITCHEN_SUPPLIES), "kitchen_knife");
+	public static final SlimecompassItem SLIME_COMPASS_ITEM = new SlimecompassItem();
 	
 	public static final ItemWrapper[] ALL_ITEMS = {
 			ESSENCE_OF_BULLSHITE_ITEM,
 			FREQUENCY_TUNER_ITEM,
 			REMOTE_REDSTONE_INFERRER_ITEM,
-			KITCHEN_KNIFE_ITEM
+			KITCHEN_KNIFE_ITEM,
+			SLIME_COMPASS_ITEM
 	};
 	//endregion items
 	
@@ -76,6 +91,16 @@ public class FabricLitemod implements ModInitializer, ClientModInitializer {
 	public static final CuttingBoardBlock CUTTING_BOARD_BLOCK = new CuttingBoardBlock();
 	public static final ForceLoadificatorBlock FORCE_LOADIFICATOR_BLOCK = new ForceLoadificatorBlock();
 	
+	public static final PushaPeater PUSHA_PEATER_BLOCK = new PushaPeater();
+	public static final BlockItem PUSHA_PEATER_ITEM = new BlockItem(PUSHA_PEATER_BLOCK, new Item.Settings().group(ItemGroup.REDSTONE));
+	public static final PushaParator PUSHA_PARATOR_BLOCK = new PushaParator();
+	public static final BlockItem PUSHA_PARATOR_ITEM = new BlockItem(PUSHA_PARATOR_BLOCK, new Item.Settings().group(ItemGroup.REDSTONE));
+	public static final PushaRedstone PUSHA_REDSTONE_BLOCK = new PushaRedstone();
+	public static final BlockItem PUSHA_REDSTONE_ITEM = new BlockItem(PUSHA_REDSTONE_BLOCK, new Item.Settings().group(ItemGroup.REDSTONE));
+	
+	public static final BlockWrapper FACTORY_BLOCK = new BlockWrapper(Block.Settings.copy(Blocks.YELLOW_TERRACOTTA), "factory", true);
+	public static final BlockWrapper FACTORY_MOSSY_BLOCK = new BlockWrapper(Block.Settings.copy(Blocks.YELLOW_TERRACOTTA), "factory_mossy", true);
+	
 	public static BlockEntityType<RedstoneCapacitorBlockEntity> REDSTONE_CAPACITOR_BLOCK_ENTITY;
 	public static BlockEntityType<RedstoneInferrerBlockEntity> REDSTONE_INFERRER_BLOCK_ENTITY;
 	public static BlockEntityType<BLENDOMATOR9000BlockEntity> BLENDOMATOR9000_BLOCK_ENTITY;
@@ -84,9 +109,16 @@ public class FabricLitemod implements ModInitializer, ClientModInitializer {
 			REDSTONE_INFERRER_BLOCK,
 			REDSTONE_CAPACITOR_BLOCK,
 			CUTTING_BOARD_BLOCK,
-			FORCE_LOADIFICATOR_BLOCK
+			FORCE_LOADIFICATOR_BLOCK,
+			
+			FACTORY_MOSSY_BLOCK,
+			FACTORY_BLOCK
 	};
 	//endregion blocks
+	
+	//region entities
+	public static EntityType<TestLivingEntity> TEST_LIVING_ENTITY_TYPE;
+	//endregion entities
 	
 	private static ItemStack getKitchenKnifeItem() {
 		return new ItemStack(KITCHEN_KNIFE_ITEM);
@@ -117,6 +149,20 @@ public class FabricLitemod implements ModInitializer, ClientModInitializer {
 				Registry.register(Registry.ITEM, block.getIdentifier(), block.getBlockItem());
 			}
 		}
+		//pushable redstone
+		Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "movable_repeater"), PUSHA_PEATER_BLOCK);
+		Registry.register(Registry.ITEM, new Identifier(MOD_ID, "movable_repeater"), PUSHA_PEATER_ITEM);
+		Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "movable_comparator"), PUSHA_PARATOR_BLOCK);
+		Registry.register(Registry.ITEM, new Identifier(MOD_ID, "movable_comparator"), PUSHA_PARATOR_ITEM);
+		Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "movable_redstone_wire"), PUSHA_REDSTONE_BLOCK);
+		Registry.register(Registry.ITEM, new Identifier(MOD_ID, "movable_redstone_wire"), PUSHA_REDSTONE_ITEM);
+		
+		TEST_LIVING_ENTITY_TYPE = EntityType.Builder.create(TestLivingEntity::new, EntityCategory.CREATURE)
+				//this is so dumb... why is Entity#getDimensions(EntityPose) a thing?!?
+				//spent actual hours trying to find out why it looked right but was wrong
+				.setDimensions(3f, 2.4f)
+				.build(new Identifier(MOD_ID, "test_living_entity").toString());
+		Registry.register(Registry.ENTITY_TYPE, new Identifier(MOD_ID, "test_living_entity"), TEST_LIVING_ENTITY_TYPE);
 		
 		REDSTONE_CAPACITOR_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, MOD_ID + ":capacitor",
 				BlockEntityType.Builder.create(RedstoneCapacitorBlockEntity::new, REDSTONE_CAPACITOR_BLOCK).build(null)
@@ -161,7 +207,11 @@ public class FabricLitemod implements ModInitializer, ClientModInitializer {
 		for (BlockWrapper block : FoodItem.ALL_BLOCKS) {
 			BlockRenderLayerMap.INSTANCE.putBlock(block, block.getRenderLayer());
 		}
+		BlockRenderLayerMap.INSTANCE.putBlock(PUSHA_PEATER_BLOCK, RenderLayer.getCutout());
+		BlockRenderLayerMap.INSTANCE.putBlock(PUSHA_PARATOR_BLOCK, RenderLayer.getCutout());
+		BlockRenderLayerMap.INSTANCE.putBlock(PUSHA_REDSTONE_BLOCK, RenderLayer.getCutout());
 		ScreenProviderRegistry.INSTANCE.registerFactory(BLENDOMATOR9000_CONTAINER, BLENDOMATOR9000Screen::new);
+		EntityRendererRegistry.INSTANCE.register(TEST_LIVING_ENTITY_TYPE, TestLivingEntityRenderer::new);
 	}
 	
 }

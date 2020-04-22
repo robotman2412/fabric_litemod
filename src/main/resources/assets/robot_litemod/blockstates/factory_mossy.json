@@ -1,0 +1,8 @@
+{
+    "variants": {
+      "": [
+        { "model": "robot_litemod:block/factory_mossy_0" },
+        { "model": "robot_litemod:block/factory_mossy_1" }
+      ]
+    }
+}

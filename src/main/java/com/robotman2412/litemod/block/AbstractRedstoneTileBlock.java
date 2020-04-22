@@ -1,7 +1,7 @@
 package com.robotman2412.litemod.block;
 
-import com.robotman2412.litemod.PowerResult;
-import com.robotman2412.litemod.RelativeDirection;
+import com.robotman2412.litemod.util.PowerResult;
+import com.robotman2412.litemod.util.RelativeDirection;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityContext;
 import net.minecraft.item.Item;

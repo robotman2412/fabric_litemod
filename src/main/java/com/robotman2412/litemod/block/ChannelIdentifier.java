@@ -1,5 +1,6 @@
 package com.robotman2412.litemod.block;
 
+import com.robotman2412.litemod.item.FrequencyTunerItem;
 import net.minecraft.nbt.CompoundTag;
 
 import java.util.Random;
@@ -56,6 +57,10 @@ public class ChannelIdentifier {
 		return other.id == id && ownerUUIDMost == other.ownerUUIDMost && ownerUUIDLeast == other.ownerUUIDLeast;
 	}
 	
+	/**
+	 * Hash code used for <code>java.util.HashMap</code>
+	 * @return A pseudo-random hash code.
+	 */
 	@Override
 	public int hashCode() {
 		long long0 = ownerUUIDLeast & 3566529374L + ownerUUIDMost * 26578337593L + id * 7569527363L;
@@ -67,11 +72,27 @@ public class ChannelIdentifier {
 		return new ChannelIdentifier(id, new UUID(ownerUUIDMost, ownerUUIDLeast));
 	}
 	
+	/**
+	 * @return <code>ownerUUIDLeast</code> and <code>ownerUUIDMost</code> combined, or null if both 0
+	 */
 	public UUID ownerUUID() {
 		if (ownerUUIDMost == 0 && ownerUUIDLeast == 0) {
 			return null;
 		}
 		return new UUID(ownerUUIDMost, ownerUUIDLeast);
+	}
+	
+	/**
+	 * @return whether or not the channel is valid given the restrictions
+	 */
+	public boolean isWithinBounds() {
+		if (id < 0) {
+			return false;
+		}
+		if (ownerUUIDLeast != 0 && ownerUUIDMost != 0) {
+			return id <= FrequencyTunerItem.getMaximumPrivateChannel();
+		}
+		return id < FrequencyTunerItem.getMaximumPublicChannel();
 	}
 	
 }

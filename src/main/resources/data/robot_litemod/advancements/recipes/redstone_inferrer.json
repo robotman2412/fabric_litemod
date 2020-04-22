@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "robot_litemod:redstone_inferrer",
+      "robot_litemod:remote_redstone_inferrer",
+      "robot_litemod:frequency_tuner"
+    ]
+  },
+  "criteria": {
+    "has_ender_eye": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:ender_eye"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "robot_litemod:redstone_inferrer"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ender_eye",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,7 +1,7 @@
 package com.robotman2412.litemod.block;
 
 import com.robotman2412.litemod.FabricLitemod;
-import com.robotman2412.litemod.RelativeDirection;
+import com.robotman2412.litemod.util.RelativeDirection;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
@@ -44,6 +44,7 @@ public class RedstoneCapacitorBlock extends AbstractRedstoneTileBlock implements
 				.with(Properties.HORIZONTAL_FACING, Direction.NORTH)
 				.with(HOLD, false)
 		);
+		
 	}
 	
 	@Override
@@ -135,11 +136,29 @@ public class RedstoneCapacitorBlock extends AbstractRedstoneTileBlock implements
 	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
 		Direction facing = state.get(Properties.HORIZONTAL_FACING);
 		RedstoneCapacitorBlockEntity ent = (RedstoneCapacitorBlockEntity) world.getBlockEntity(pos);
-		stupidParticla(ent.powerLevel, state, world, pos, random, facing.getOffsetX() * 0.2, 0.1, facing.getOffsetZ() * 0.2);
-		stupidParticla(15, state, world, pos, random, facing.getOffsetX() * -0.2, 0.1, facing.getOffsetZ() * -0.2);
+		if (ent == null) {
+			return;
+		}
+		int powah;
+		switch(state.get(POWER)) {
+			default:
+				powah = 0;
+				break;
+			case HALF:
+				powah = 7;
+				break;
+			case ON:
+				powah = 15;
+				break;
+		}
+		stupidParticla(powah, state, world, pos, random, facing.getOffsetX() * 0.2, 0.1, facing.getOffsetZ() * 0.2);
+		stupidParticla(powah, state, world, pos, random, facing.getOffsetX() * -0.2, 0.1, facing.getOffsetZ() * -0.2);
 	}
 	
 	protected void stupidParticla(int i, BlockState state, World world, BlockPos pos, Random random, double xOffs, double yOffs, double zOffs) {
+		if (i == 0) {
+			return;
+		}
 		double x = pos.getX() + 0.5D + (random.nextFloat() - 0.5D) * 0.2D + xOffs;
 		double y = (pos.getY() + 0.0625D) + yOffs;
 		double z = pos.getZ() + 0.5D + (random.nextFloat() - 0.5D) * 0.2D + zOffs;

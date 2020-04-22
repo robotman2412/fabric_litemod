@@ -1,0 +1,9 @@
+{
+  "parent": "robot_litemod:block/factory",
+  "textures": {
+    "up": "robot_litemod:block/factory/mossy_1",
+    "side": "robot_litemod:block/factory/mossy_1",
+    "down": "robot_litemod:block/factory/mossy_1",
+    "particle": "robot_litemod:block/factory/mossy_1"
+  }
+}

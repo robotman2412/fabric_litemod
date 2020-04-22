@@ -1,0 +1,5 @@
+{
+    "variants": {
+      "": { "model": "robot_litemod:block/factory" }
+    }
+}
