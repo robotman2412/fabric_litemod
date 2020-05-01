@@ -9,8 +9,8 @@ import net.minecraft.util.Identifier;
 
 public class BlockWrapper extends Block {
 	
-	public final String blockName;
-	public final boolean doBlockItem;
+	public String blockName;
+	public boolean doBlockItem;
 	
 	public BlockWrapper(Settings settings, String blockName, boolean doBlockItem) {
 		super(settings);

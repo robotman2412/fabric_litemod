@@ -58,17 +58,19 @@ public class EssenceOfBullshiteItem extends ItemWrapper {
 				if (block instanceof IRedstoneInfo) {
 					IRedstoneInfo info = (IRedstoneInfo) block;
 					powerLevel = info.getPowerLevel(state);
+					isEmittedPowerLevel = info.isEmittedPower(state);
 				}
 				else if (ent instanceof IRedstoneInfo) {
 					IRedstoneInfo info = (IRedstoneInfo) ent;
 					powerLevel = info.getPowerLevel(state);
+					isEmittedPowerLevel = info.isEmittedPower(state);
 				}
-				else if (block == Blocks.REDSTONE_BLOCK) {
+				else if (block instanceof RedstoneBlock) {
 					powerLevel = 16;
 					isEmittedPowerLevel = true;
 					showBlockPowerLevel = false;
 				}
-				else if (block == Blocks.REDSTONE_WIRE) {
+				else if (block instanceof RedstoneWireBlock) {
 					powerLevel = state.get(RedstoneWireBlock.POWER);
 					isEmittedPowerLevel = true;
 				}
@@ -76,15 +78,15 @@ public class EssenceOfBullshiteItem extends ItemWrapper {
 					powerLevel = state.get(AbstractButtonBlock.POWERED) ? 16 : 0;
 					isEmittedPowerLevel = true;
 				}
-				else if (block == Blocks.LEVER) {
+				else if (block instanceof LeverBlock) {
 					powerLevel = state.get(LeverBlock.POWERED) ? 16 : 0;
 					isEmittedPowerLevel = true;
 				}
-				else if (block == Blocks.OBSERVER) {
+				else if (block instanceof ObserverBlock) {
 					powerLevel = state.get(ObserverBlock.POWERED) ? 16 : 0;
 					isEmittedPowerLevel = true;
 				}
-				else if (block == Blocks.TRIPWIRE_HOOK) {
+				else if (block instanceof TripwireHookBlock) {
 					powerLevel = state.get(TripwireHookBlock.POWERED) ? 16 : 0;
 					isEmittedPowerLevel = true;
 				}
@@ -96,24 +98,24 @@ public class EssenceOfBullshiteItem extends ItemWrapper {
 					powerLevel = state.get(PressurePlateBlock.POWERED) ? 16 : 0;
 					isEmittedPowerLevel = true;
 				}
-				else if (block == Blocks.COMPARATOR) {
+				else if (block instanceof ComparatorBlock) {
 					if (ent instanceof ComparatorBlockEntity) {
 						powerLevel = ((ComparatorBlockEntity) ent).getOutputSignal();
 						isEmittedPowerLevel = true;
 					}
 				}
-				else if (block == Blocks.REDSTONE_LAMP) {
+				else if (block instanceof RedstoneLampBlock) {
 					if (state.get(RedstoneLampBlock.LIT)) {
 						powerLevel = 16;
 					}
 				}
-				else if (block == Blocks.REDSTONE_TORCH || block == Blocks.REDSTONE_WALL_TORCH) {
+				else if (block instanceof RedstoneTorchBlock || block instanceof WallRedstoneTorchBlock) {
 					if (state.get(RedstoneTorchBlock.LIT)) {
 						powerLevel = 16;
 					}
 					isEmittedPowerLevel = true;
 				}
-				else if (block == Blocks.REPEATER) {
+				else if (block instanceof RepeaterBlock) {
 					if (state.get(RepeaterBlock.POWERED)) {
 						powerLevel = 16;
 					}
@@ -124,12 +126,12 @@ public class EssenceOfBullshiteItem extends ItemWrapper {
 						powerLevel = 16;
 					}
 				}
-				else if (block == Blocks.DISPENSER) {
+				else if (block instanceof DispenserBlock) {
 					if (state.get(DispenserBlock.TRIGGERED)) {
 						powerLevel = 16;
 					}
 				}
-				else if (block == Blocks.DROPPER) {
+				else if (block instanceof DropperBlock) {
 					if (state.get(DropperBlock.TRIGGERED)) {
 						powerLevel = 16;
 					}

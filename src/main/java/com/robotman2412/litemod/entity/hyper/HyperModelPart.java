@@ -17,14 +17,6 @@ public class HyperModelPart extends ModelPart {
 	private float textureHeight;
 	private int textureOffsetU;
 	private int textureOffsetV;
-	public float pivotX;
-	public float pivotY;
-	public float pivotZ;
-	public float pitch;
-	public float yaw;
-	public float roll;
-	public boolean mirror;
-	public boolean visible;
 	public ObjectList<Cuboid> cuboids;
 	public ObjectList<ModelPart> children;
 	

@@ -57,6 +57,8 @@
   "block.robot_litemod.movable_redstone_wire": "Movable redstone wire",
   "block.robot_litemod.movable_redstone_capacitor": "Movable redstone capacitor",
   "block.robot_litemod.movable_redstone_inferrer": "Movable redstone inferrer",
+  "block.robot_litemod.movable_redstone_torch": "Movable redstone torch",
+  "block.robot_litemod.the_stone_of_graves": "Gravestone",
   
   "robot_litemod.gui.frequency_tuner.private": "Private",
   "robot_litemod.gui.frequency_tuner.public": "Public",
@@ -70,6 +72,8 @@
 
   "death.robot_litemod.escaping": " while escaping ",
   "death.robot_litemod.using_item": " using ",
+  
+  "death.robot_litemod.no_grave": "You died, but there was no free space for your grave!",
 
   "death.robot_litemod.drug.explosive": " fooled around with explosives too much while on drugs",
   "death.robot_litemod.drug.explosive_combat": " was too drugged to not be blown up by ",

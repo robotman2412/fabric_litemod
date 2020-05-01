@@ -1,15 +1,13 @@
 package com.robotman2412.litemod.item;
 
+import com.robotman2412.litemod.ClientEntry;
 import com.robotman2412.litemod.FabricLitemod;
 import com.robotman2412.litemod.block.ChannelIdentifier;
 import com.robotman2412.litemod.block.inferrer.RedstoneInferrerBlockEntity;
-import com.robotman2412.litemod.gui.FrequencyTunerScreen;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -64,7 +62,7 @@ public class FrequencyTunerItem extends ItemWrapper implements FrequencyTunableI
 			return TypedActionResult.fail(stack);
 		}
 		if (user.getEntityWorld().isClient()) {
-			MinecraftClient.getInstance().openScreen(new FrequencyTunerScreen((ClientPlayerEntity) user, channel, hand));
+			ClientEntry.openFrequencyTunerScreen(user, channel, hand);
 			return TypedActionResult.pass(stack);
 		}
 		ServerPlayerEntity player = (ServerPlayerEntity) user;

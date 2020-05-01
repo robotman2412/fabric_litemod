@@ -4,15 +4,20 @@
   "package": "com.robotman2412.litemod.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-  ],
-  "client": [
-    "InGameHudMixin",
-    "GameRendererMixin",
     "PlayerEntityMixin",
     "DamageTrackerMixin",
     "Schema2100Mixin",
     "RedstoneWireBlockMixin",
-    "BlockColorsMixin"
+    "AbstractRedstoneGateMixin",
+    "TameableEntityMixin",
+    "PlayerContainerEquipmentSlotMixin"
+  ],
+  "client": [
+    "InGameHudMixin",
+    "GameRendererMixin",
+    "BlockColorsMixin",
+    "ClientPlayNetworkHandlerMixin",
+    "HeldItemRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

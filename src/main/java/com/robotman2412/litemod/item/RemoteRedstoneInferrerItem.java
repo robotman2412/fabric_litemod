@@ -1,5 +1,6 @@
 package com.robotman2412.litemod.item;
 
+import com.robotman2412.litemod.ClientEntry;
 import com.robotman2412.litemod.FabricLitemod;
 import com.robotman2412.litemod.block.ChannelIdentifier;
 import com.robotman2412.litemod.block.inferrer.InferrerChannelMap;
@@ -50,7 +51,7 @@ public class RemoteRedstoneInferrerItem extends ItemWrapper implements Transmiss
 		int maxDelay = ((RemoteRedstoneInferrerItem) stack.getItem()).getMaxDelay(stack);
 		if (user.isSneaking()) {
 			if (user instanceof ClientPlayerEntity) {
-				MinecraftClient.getInstance().openScreen(new RemoteRedstoneInferrerScreen((ClientPlayerEntity) user, pulse.channelFor, pulse, maxBits, minDelay, maxDelay, hand));
+				ClientEntry.openRemoteRedstoneInferrerScreen(user, pulse.channelFor, pulse, maxBits, minDelay, maxDelay, hand);
 				return TypedActionResult.pass(stack);
 			}
 		}

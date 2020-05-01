@@ -1,0 +1,66 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "robot_litemod:the_stone_of_graves",
+          "functions": [
+            {
+              "function": "minecraft:copy_name",
+              "source": "block_entity"
+            },
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "lastKnownName",
+                  "target": "BlockEntityTag.lastKnownName",
+                  "op": "replace"
+                },
+                {
+                  "source": "lastKnownOwnerName",
+                  "target": "BlockEntityTag.lastKnownOwnerName",
+                  "op": "replace"
+                },
+                {
+                  "source": "Items",
+                  "target": "BlockEntityTag.Items",
+                  "op": "replace"
+                },
+                {
+                  "source": "ownerUuidLeast",
+                  "target": "BlockEntityTag.ownerUuidLeast",
+                  "op": "replace"
+                },
+                {
+                  "source": "ownerUuidMost",
+                  "target": "BlockEntityTag.ownerUuidMost",
+                  "op": "replace"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:match_tool",
+          "predicate": {
+            "enchantments": [
+              {
+                "enchantment": "minecraft:silk_touch",
+                "levels": {
+                  "min": 1
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

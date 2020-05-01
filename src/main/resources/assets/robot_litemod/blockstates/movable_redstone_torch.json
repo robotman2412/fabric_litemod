@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "lit=true":  { "model": "robot_litemod:block/movable_redstone_torch/on" },
+        "lit=false":  { "model": "robot_litemod:block/movable_redstone_torch/off" }
+    }
+}

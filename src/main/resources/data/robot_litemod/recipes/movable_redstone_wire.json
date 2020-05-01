@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "redstone_movable_repeater",
+  "pattern": [
+    " S ",
+    "#R#",
+    " S "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:scaffolding"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "robot_litemod:movable_redstone_wire"
+  }
+}

@@ -75,7 +75,7 @@ public class RedstoneCapacitorBlockEntity extends BlockEntity implements Tickabl
 	}
 	
 	@Override
-	public boolean isEmittedPower() {
+	public boolean isEmittedPower(BlockState state) {
 		return true;
 	}
 	

@@ -1,0 +1,117 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"3": "block/dirt",
+		"4": "block/grass_path_top",
+		"particle": "robot_litemod:block/the_stone_of_graves/back",
+		"back": "robot_litemod:block/the_stone_of_graves/back",
+		"flowers": "robot_litemod:block/the_stone_of_graves/flowers",
+		"front": "robot_litemod:block/the_stone_of_graves/front_dog"
+	},
+	"elements": [
+		{
+			"from": [3, 1, 1],
+			"to": [13, 12, 2],
+			"faces": {
+				"north": {"uv": [13, 2, 3, 13], "texture": "#back"},
+				"east": {"uv": [13, 2, 14, 13], "texture": "#back"},
+				"south": {"uv": [3, 2, 13, 13], "texture": "#front"},
+				"west": {"uv": [2, 2, 3, 13], "texture": "#back"},
+				"up": {"uv": [3, 1, 13, 2], "texture": "#back"},
+				"down": {"uv": [0, 0, 10, 1], "texture": "#back"}
+			}
+		},
+		{
+			"from": [4, 12, 1],
+			"to": [12, 13, 2],
+			"faces": {
+				"north": {"uv": [0, 0, 8, 1], "texture": "#back"},
+				"east": {"uv": [0, 0, 1, 1], "texture": "#back"},
+				"south": {"uv": [4, 1, 12, 2], "texture": "#front"},
+				"west": {"uv": [0, 0, 1, 1], "texture": "#back"},
+				"up": {"uv": [0, 0, 8, 1], "texture": "#back"},
+				"down": {"uv": [0, 0, 8, 1], "texture": "#back"}
+			}
+		},
+		{
+			"from": [0, 0, 0],
+			"to": [16, 1, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 1], "texture": "#4"},
+				"east": {"uv": [0, 0, 16, 1], "texture": "#4"},
+				"south": {"uv": [0, 0, 16, 1], "texture": "#4"},
+				"west": {"uv": [0, 0, 16, 1], "texture": "#4"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#4"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#3"}
+			}
+		},
+		{
+			"from": [7.5, 1, 5.41421],
+			"to": [8.5, 1.5, 14.41421],
+			"faces": {
+				"north": {"uv": [8, 2, 9, 3], "texture": "#flowers"},
+				"east": {"uv": [0, 2, 9, 3], "texture": "#flowers"},
+				"south": {"uv": [0, 2, 1, 3], "texture": "#flowers"},
+				"west": {"uv": [0, 2, 9, 3], "rotation": 180, "texture": "#flowers"},
+				"up": {"uv": [0, 2, 9, 3], "rotation": 270, "texture": "#flowers"},
+				"down": {"uv": [0, 2, 9, 3], "rotation": 90, "texture": "#flowers"}
+			}
+		},
+		{
+			"from": [6.5, 1, 4.41421],
+			"to": [7.5, 1.5, 7.41421],
+			"faces": {
+				"north": {"uv": [9, 1, 10, 2], "texture": "#flowers"},
+				"east": {"uv": [7, 1, 10, 2], "texture": "#flowers"},
+				"south": {"uv": [7, 1, 8, 2], "texture": "#flowers"},
+				"west": {"uv": [7, 1, 10, 2], "rotation": 180, "texture": "#flowers"},
+				"up": {"uv": [7, 1, 10, 2], "rotation": 270, "texture": "#flowers"},
+				"down": {"uv": [7, 1, 10, 2], "rotation": 90, "texture": "#flowers"}
+			}
+		},
+		{
+			"from": [8.5, 1, 4.41421],
+			"to": [9.5, 1.5, 7.41421],
+			"faces": {
+				"north": {"uv": [9, 3, 10, 4], "texture": "#flowers"},
+				"east": {"uv": [7, 3, 10, 4], "texture": "#flowers"},
+				"south": {"uv": [7, 3, 8, 4], "texture": "#flowers"},
+				"west": {"uv": [7, 3, 10, 4], "rotation": 180, "texture": "#flowers"},
+				"up": {"uv": [7, 3, 10, 4], "rotation": 270, "texture": "#flowers"},
+				"down": {"uv": [7, 3, 10, 4], "rotation": 90, "texture": "#flowers"}
+			}
+		},
+		{
+			"from": [6.5, 1, 11.41421],
+			"to": [7.5, 1.5, 12.41421],
+			"faces": {
+				"north": {"uv": [2, 1, 3, 2], "texture": "#flowers"},
+				"east": {"uv": [2, 1, 3, 2], "texture": "#flowers"},
+				"south": {"uv": [2, 1, 3, 2], "texture": "#flowers"},
+				"west": {"uv": [2, 1, 3, 2], "texture": "#flowers"},
+				"up": {"uv": [2, 1, 3, 2], "rotation": 270, "texture": "#flowers"},
+				"down": {"uv": [2, 1, 3, 2], "rotation": 90, "texture": "#flowers"}
+			}
+		},
+		{
+			"from": [5.5, 1, 10.41421],
+			"to": [7.5, 1.5, 11.41421],
+			"faces": {
+				"north": {"uv": [3, 0, 4, 2], "rotation": 90, "texture": "#flowers"},
+				"east": {"uv": [0, 0, 1, 1], "texture": "#flowers"},
+				"south": {"uv": [3, 0, 4, 2], "rotation": 270, "texture": "#flowers"},
+				"west": {"uv": [3, 0, 4, 1], "texture": "#flowers"},
+				"up": {"uv": [3, 0, 4, 2], "rotation": 270, "texture": "#flowers"},
+				"down": {"uv": [3, 0, 4, 2], "rotation": 90, "texture": "#flowers"}
+			}
+		}
+	],
+	"groups": [0, 1, 2,
+		{
+			"name": "tulip",
+			"origin": [8, 8, 8],
+			"children": [3, 4, 5, 6, 7]
+		}
+	]
+}

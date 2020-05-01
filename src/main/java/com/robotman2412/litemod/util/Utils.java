@@ -67,4 +67,16 @@ public class Utils {
 		return new BlockPos(posX, posY, posZ);
 	}
 	
+	public static boolean shouldDoGrave() {
+		return true;//TODO: gamerule
+	}
+	
+	public static int maxPortalWidth() {
+		return 21;
+	}
+	
+	public static int maxPortalHeight() {
+		return 21;
+	}
+	
 }

@@ -47,6 +47,12 @@ public abstract class DamageTrackerMixin {
 				Text append = null;
 				if (biggestSource.isProjectile()) {
 					outTx = new TranslatableText("death.robot_litemod.drug.projectile");
+				} else if (biggestSource.isExplosive()) {
+					if (biggestAttacker == null) {
+						outTx = new TranslatableText("death.robot_litemod.drug.explosive");
+					} else {
+						outTx = new TranslatableText("death.robot_litemod.drug.explosive_combat");
+					}
 				} else if (biggestAttacker instanceof PlayerEntity) {
 					if (biggestAttacker.hasStatusEffect(FabricLitemod.HEALTH_CONFUSION)) {
 						outTx = new TranslatableText("death.robot_litemod.drug.bitchfight_lost");
@@ -84,14 +90,7 @@ public abstract class DamageTrackerMixin {
 					if (biggestAttacker != null) {
 						outTx.append(new TranslatableText("death.robot_litemod.escaping"));
 					}
-				} else if (biggestSource.isExplosive()) {
-					if (biggestAttacker == null) {
-						outTx = new TranslatableText("death.robot_litemod.drug.explosive");
-					} else {
-						outTx = new TranslatableText("death.robot_litemod.drug.explosive_combat");
-					}
-				}
-				if (biggestAttacker != null) {
+				} else if (biggestAttacker != null) {
 					if (outTx == null) {
 						outTx = new TranslatableText("death.robot_litemod.drug.surprise_mob");
 						append = new TranslatableText("death.robot_litemod.drug.surprise_mob.suffix");

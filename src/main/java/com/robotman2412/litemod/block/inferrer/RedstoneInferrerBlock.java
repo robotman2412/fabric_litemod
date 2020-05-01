@@ -3,6 +3,7 @@ package com.robotman2412.litemod.block.inferrer;
 import com.mojang.authlib.GameProfile;
 import com.robotman2412.litemod.block.AbstractRedstoneTileBlock;
 import com.robotman2412.litemod.block.ChannelIdentifier;
+import com.robotman2412.litemod.util.IRedstoneInfo;
 import com.robotman2412.litemod.util.RelativeDirection;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -40,7 +41,7 @@ import net.minecraft.world.World;
 import java.util.Random;
 import java.util.UUID;
 
-public class RedstoneInferrerBlock extends AbstractRedstoneTileBlock implements BlockEntityProvider {
+public class RedstoneInferrerBlock extends AbstractRedstoneTileBlock implements BlockEntityProvider, IRedstoneInfo {
 	
 	public static final BooleanProperty IS_SENDER = BooleanProperty.of("sending");
 	
@@ -89,15 +90,16 @@ public class RedstoneInferrerBlock extends AbstractRedstoneTileBlock implements 
 	
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		boolean isSender = !state.get(IS_SENDER);
 		RedstoneInferrerBlockEntity ent = (RedstoneInferrerBlockEntity) world.getBlockEntity(pos);
 		ChannelIdentifier channel = ent.channel;
 		UUID uuid = channel.ownerUUID();
+		boolean isSender = !state.get(IS_SENDER);
+		boolean displaySender = isSender ^ !player.getUuid().equals(uuid);
 		if (!world.isClient()) {
 			ServerWorld serverWorld = (ServerWorld) world; 
 			MinecraftServer server = serverWorld.getServer();
 			ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) player;
-			String sTxRx = isSender ? "block.robot_litemod.redstone_inferrer.tx" : "block.robot_litemod.redstone_inferrer.rx";
+			String sTxRx = displaySender ? "block.robot_litemod.redstone_inferrer.tx" : "block.robot_litemod.redstone_inferrer.rx";
 			if (uuid != null) {
 				UserCache cache = server.getUserCache();
 				GameProfile profile = cache.getByUuid(uuid);
@@ -117,15 +119,14 @@ public class RedstoneInferrerBlock extends AbstractRedstoneTileBlock implements 
 				serverPlayerEntity.sendChatMessage(text, MessageType.GAME_INFO);
 			}
 		}
-		if (uuid != null && !uuid.equals(player.getUuid())) {
-			//cant mess with other people's inferrers
+		if (uuid != null && !uuid.equals(player.getUuid()) || world.isClient()) {
+			double x = pos.getX() + 0.5f;
+			double y = pos.getY() + 0.5f;
+			double z = pos.getZ() + 0.5f;
+			world.playSound(x, y, z, new SoundEvent(new Identifier("minecraft", "block.lever.click")), SoundCategory.BLOCKS, 1f, isSender ? 0.7f : 0.55f, false);
 			return ActionResult.CONSUME;
 		}
 		ent.setSending(isSender);
-		double x = pos.getX() + 0.5f;
-		double y = pos.getY() + 0.5f;
-		double z = pos.getZ() + 0.5f;
-		world.playSound(x, y, z, new SoundEvent(new Identifier("minecraft", "block.lever.click")), SoundCategory.BLOCKS, 1f, isSender ? 0.7f : 0.55f, false);
 		neighborUpdate(state, world, pos, null, null, false);
 		boolean powered = getBooleanPowerForSide(RelativeDirection.BACKWARD, world, state, pos);
 		if (ent.isSending()) {
@@ -184,4 +185,13 @@ public class RedstoneInferrerBlock extends AbstractRedstoneTileBlock implements 
 		return new RedstoneInferrerBlockEntity();
 	}
 	
+	@Override
+	public boolean isEmittedPower(BlockState state) {
+		return !state.get(IS_SENDER);
+	}
+	
+	@Override
+	public int getPowerLevel(BlockState state) {
+		return state.get(Properties.POWERED) ? 16 : 0;
+	}
 }

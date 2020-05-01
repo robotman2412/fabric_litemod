@@ -12,30 +12,84 @@ import java.util.List;
 
 public class TestLivingEntityModel extends CompositeEntityModel<TestLivingEntity> {
 	
-	private List<ModelPart> tehParts;
+	public static HyperCuboidUVMapping BODY_UV_MAPPING_0 = new HyperCuboidUVMapping(
+			new HyperUVMapping(48, 0, 71, 23), //bottom
+			new HyperUVMapping(24, 0, 47, 23), //top
+			new HyperUVMapping(0, 0, 23, 23), //forward
+			new HyperUVMapping(0, 0, 23, 23), //backward
+			new HyperUVMapping(120, 0, 223, 31), //left
+			new HyperUVMapping(120, 0, 223, 31) //right
+	);
 	
-	private ModelPart body;
-	private List<ModelPart> neck;
-	private List<ModelPart> tail;
-	private ModelPart[] tailAppendage;
-	private ModelPart head;
-	private ModelPart mouth;
-	private ModelPart[] frontRightLeg;
-	private ModelPart[] frontLeftLeg;
-	private ModelPart[] backRightLeg;
-	private ModelPart[] backLeftLeg;
+	public static HyperCuboidUVMapping BODY_UV_MAPPING_1 = new HyperCuboidUVMapping(
+			new HyperUVMapping(48, 0, 71, 23), //bottom
+			new HyperUVMapping(226, 36, 47, 23), //top
+			new HyperUVMapping(0, 0, 23, 23), //forward
+			new HyperUVMapping(0, 0, 23, 23), //backward
+			new HyperUVMapping(120, 0, 223, 31), //left
+			new HyperUVMapping(120, 0, 223, 31) //right
+	);
+	
+	public static HyperCuboidUVMapping TAIL_UV_MAPPING_0 = new HyperCuboidUVMapping(
+			new HyperUVMapping(48, 0, 71, 23), //bottom
+			new HyperUVMapping(24, 0, 47, 23), //top
+			new HyperUVMapping(0, 0, 23, 23), //forward
+			new HyperUVMapping(0, 0, 23, 23), //backward
+			new HyperUVMapping(0, 0, 23, 23), //left
+			new HyperUVMapping(0, 0, 23, 23) //right
+	);
+	
+	public static HyperCuboidUVMapping TAIL_FIN_UV_MAPPING = new HyperCuboidUVMapping(
+			new HyperUVMapping(0, 24, 0, 24), //bottom
+			new HyperUVMapping(0, 24, 0, 24), //top
+			new HyperUVMapping(0, 24, 0, 24), //forward
+			new HyperUVMapping(0, 24, 0, 24), //backward
+			new HyperUVMapping(0, 24, 47, 39), //left
+			new HyperUVMapping(0, 24, 47, 39) //right
+	);
+	
+	protected List<ModelPart> tehParts;
+	
+	protected HyperModelPart body;
+	protected List<HyperModelPart> neck;
+	protected List<HyperModelPart> tail;
+	protected HyperModelPart[] tailAppendage;
+	protected HyperModelPart head;
+	protected HyperModelPart mouth;
+	protected HyperModelPart[] frontRightLeg;
+	protected HyperModelPart[] frontLeftLeg;
+	protected HyperModelPart[] backRightLeg;
+	protected HyperModelPart[] backLeftLeg;
 	
 	public TestLivingEntityModel() {
 		construct();
 	}
 	
-	private void construct() {
+	protected void construct() {
+		BODY_UV_MAPPING_0 = new HyperCuboidUVMapping(
+				new HyperUVMapping(192, 0, 223, 103), //bottom
+				new HyperUVMapping(224, 0, 255, 103), //top
+				new HyperUVMapping(0, 0, 1, 1), //forward
+				new HyperUVMapping(0, 0, 1, 1), //backward
+				new HyperUVMapping(88, 0, 191, 31), //left
+				new HyperUVMapping(88, 0, 191, 31) //right
+		);
+		
+		BODY_UV_MAPPING_1 = new HyperCuboidUVMapping(
+				new HyperUVMapping(194, 8, 221, 67), //bottom
+				new HyperUVMapping(226, 36, 253, 95), //top
+				new HyperUVMapping(0, 0, 1, 1), //forward
+				new HyperUVMapping(0, 0, 1, 1), //backward
+				new HyperUVMapping(88, 0, 191, 31), //left
+				new HyperUVMapping(88, 0, 191, 31) //right
+		);
+		
 		tehParts = new ArrayList<>();
-		body = new ModelPart(this, 0, 0);
+		body = new HyperModelPart(this, 0, 0);
 		body.setTextureSize(256, 128);
 		//main body
-		body.addCuboid(-8, -12f, -19, 16, 15, 52);
-		body.addCuboid(-7, -13f, -15, 14, 17, 30);
+		body.cube(-8, -12f, -19, 16, 15, 52, false, BODY_UV_MAPPING_0);
+		body.cube(-7, -13f, -15, 14, 17, 30, false, BODY_UV_MAPPING_1);
 		//fins
 		body.setTextureOffset(0, 58);
 		body.addCuboid(0, -17f, -15, 0.001f, 4, 30);
@@ -66,24 +120,24 @@ public class TestLivingEntityModel extends CompositeEntityModel<TestLivingEntity
 		tehParts.add(body);
 	}
 	
-	public static HyperCuboidUVMapping TAIL_UV_MAPPING_0 = new HyperCuboidUVMapping(
-			new HyperUVMapping(0, 0, 11, 11), //bottom
-			new HyperUVMapping(12, 0, 23, 11), //top
-			new HyperUVMapping(0, 0, 11, 11), //forward
-			new HyperUVMapping(0, 0, 11, 11), //backward
-			new HyperUVMapping(0, 0, 11, 11), //left
-			new HyperUVMapping(0, 0, 11, 11) //right
-	);
-	
 	public void makeTehTail(int number, int depth, ModelPart parent, float posx, float posy, float posz) {
 		
 		TAIL_UV_MAPPING_0 = new HyperCuboidUVMapping(
-				new HyperUVMapping(24, 0, 35, 11), //bottom
-				new HyperUVMapping(12, 0, 23, 11), //top
-				new HyperUVMapping(0, 0, 11, 11), //forward
-				new HyperUVMapping(0, 0, 11, 11), //backward
-				new HyperUVMapping(0, 0, 11, 11), //left
-				new HyperUVMapping(0, 0, 11, 11) //right
+				new HyperUVMapping(48, 0, 71, 23), //bottom
+				new HyperUVMapping(24, 0, 47, 23), //top
+				new HyperUVMapping(0, 0, 23, 23), //forward
+				new HyperUVMapping(0, 0, 23, 23), //backward
+				new HyperUVMapping(0, 0, 23, 23), //left
+				new HyperUVMapping(0, 0, 23, 23) //right
+		);
+		
+		TAIL_FIN_UV_MAPPING = new HyperCuboidUVMapping(
+				new HyperUVMapping(0, 24, 1, 25), //bottom
+				new HyperUVMapping(0, 24, 1, 25), //top
+				new HyperUVMapping(0, 24, 1, 25), //forward
+				new HyperUVMapping(0, 24, 1, 25), //backward
+				new HyperUVMapping(0, 39, 47, 24), //left
+				new HyperUVMapping(47, 39, 0, 24) //right
 		);
 		
 		if (number == 0) {
@@ -105,7 +159,7 @@ public class TestLivingEntityModel extends CompositeEntityModel<TestLivingEntity
 		//fins
 		//part.setTextureOffset(9, 55);
 		//part.addCuboid(posx, posy - cuubHeight / 2, 0, 0.001f, -4, cuubLength);
-		part.cube(posx, posy - cuubHeight / 2, 0, 0.001f, -4, cuubLength, false, TAIL_UV_MAPPING_0);
+		part.cube(posx, posy - cuubHeight / 2, 0, 0.001f, -4 + depth / 17f * 1.75f, cuubLength, false, TAIL_FIN_UV_MAPPING);
 		tail.add(part);
 		makeTehTail(number - 1, depth + 1, part, posx, posy, posz);
 	}

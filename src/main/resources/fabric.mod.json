@@ -22,7 +22,7 @@
       "com.robotman2412.litemod.FabricLitemod"
     ],
     "client": [
-      "com.robotman2412.litemod.FabricLitemod"
+      "com.robotman2412.litemod.ClientEntry"
     ]
   },
   "mixins": [

@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "grave_type=player,facing=north": [
+      { "model": "robot_litemod:block/the_stone_of_graves/player_0", "y": 0 },
+      { "model": "robot_litemod:block/the_stone_of_graves/player_1", "y": 0 },
+      { "model": "robot_litemod:block/the_stone_of_graves/player_2", "y": 0 },
+      { "model": "robot_litemod:block/the_stone_of_graves/player_3", "y": 0 }
+    ],
+    "grave_type=player,facing=east": [
+      { "model": "robot_litemod:block/the_stone_of_graves/player_0", "y": 90 },
+      { "model": "robot_litemod:block/the_stone_of_graves/player_1", "y": 90 },
+      { "model": "robot_litemod:block/the_stone_of_graves/player_2", "y": 90 },
+      { "model": "robot_litemod:block/the_stone_of_graves/player_3", "y": 90 }
+    ],
+    "grave_type=player,facing=south": [
+      { "model": "robot_litemod:block/the_stone_of_graves/player_0", "y": 180 },
+      { "model": "robot_litemod:block/the_stone_of_graves/player_1", "y": 180 },
+      { "model": "robot_litemod:block/the_stone_of_graves/player_2", "y": 180 },
+      { "model": "robot_litemod:block/the_stone_of_graves/player_3", "y": 180 }
+    ],
+    "grave_type=player,facing=west": [
+      { "model": "robot_litemod:block/the_stone_of_graves/player_0", "y": 270 },
+      { "model": "robot_litemod:block/the_stone_of_graves/player_1", "y": 270 },
+      { "model": "robot_litemod:block/the_stone_of_graves/player_2", "y": 270 },
+      { "model": "robot_litemod:block/the_stone_of_graves/player_3", "y": 270 }
+    ],
+    "grave_type=dog,facing=north": [
+      { "model": "robot_litemod:block/the_stone_of_graves/dog_0", "y": 0 },
+      { "model": "robot_litemod:block/the_stone_of_graves/dog_1", "y": 0 },
+      { "model": "robot_litemod:block/the_stone_of_graves/dog_2", "y": 0 },
+      { "model": "robot_litemod:block/the_stone_of_graves/dog_3", "y": 0 }
+    ],
+    "grave_type=dog,facing=east": [
+      { "model": "robot_litemod:block/the_stone_of_graves/dog_0", "y": 90 },
+      { "model": "robot_litemod:block/the_stone_of_graves/dog_1", "y": 90 },
+      { "model": "robot_litemod:block/the_stone_of_graves/dog_2", "y": 90 },
+      { "model": "robot_litemod:block/the_stone_of_graves/dog_3", "y": 90 }
+    ],
+    "grave_type=dog,facing=south": [
+      { "model": "robot_litemod:block/the_stone_of_graves/dog_0", "y": 180 },
+      { "model": "robot_litemod:block/the_stone_of_graves/dog_1", "y": 180 },
+      { "model": "robot_litemod:block/the_stone_of_graves/dog_2", "y": 180 },
+      { "model": "robot_litemod:block/the_stone_of_graves/dog_3", "y": 180 }
+    ],
+    "grave_type=dog,facing=west": [
+      { "model": "robot_litemod:block/the_stone_of_graves/dog_0", "y": 270 },
+      { "model": "robot_litemod:block/the_stone_of_graves/dog_1", "y": 270 },
+      { "model": "robot_litemod:block/the_stone_of_graves/dog_2", "y": 270 },
+      { "model": "robot_litemod:block/the_stone_of_graves/dog_3", "y": 270 }
+    ]
+  }
+}

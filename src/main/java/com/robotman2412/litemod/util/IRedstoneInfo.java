@@ -6,7 +6,7 @@ import net.minecraft.block.BlockState;
 public interface IRedstoneInfo {
 	
 	/** Differentiate between powered and powering components. */
-	boolean isEmittedPower();
+	boolean isEmittedPower(BlockState state);
 	/** Power level of 16 displays as on. */
 	int getPowerLevel(BlockState state);
 	
