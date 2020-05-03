@@ -36,4 +36,11 @@ public class WeaponMode {
 		return mode;
 	}
 	
+	public static WeaponMode getMode(Identifier id) {
+		return modeMap.get(id);
+	}
+	
+	public String getTranslationKey() {
+		return id.getNamespace() + ".weapon_mode." + id.getPath();
+	}
 }

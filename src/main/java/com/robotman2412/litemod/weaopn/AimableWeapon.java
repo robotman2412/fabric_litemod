@@ -19,6 +19,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.RayTraceContext;
 import net.minecraft.world.World;
 
@@ -30,7 +31,7 @@ public abstract class AimableWeapon extends ItemWrapper {
 	
 	@Override
 	public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-		stack.getOrCreateTag().remove("fire_delay");
+		
 	}
 	
 	@Override
@@ -53,7 +54,7 @@ public abstract class AimableWeapon extends ItemWrapper {
 	
 	@Override
 	public boolean useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
-		//tryFire(user.getEntityWorld(), user, hand, stack);
+		tryFire(user.getEntityWorld(), user, hand, stack);
 		return false;
 	}
 	
@@ -62,21 +63,21 @@ public abstract class AimableWeapon extends ItemWrapper {
 		return UseAction.NONE;
 	}
 	
-	public void tryFire(World world, LivingEntity player, Hand hand, ItemStack stack) {
+	public void tryFire(World world, LivingEntity shooter, Hand hand, ItemStack stack) {
 		double maxDist = getMaximumDistance(stack);
 		//raytrace blocks
-		Vec3d firePos = player.getCameraPosVec(0);
-		HitResult res = rayTrace(player, maxDist, 0, false);
+		Vec3d firePos = shooter.getCameraPosVec(1);
+		HitResult res = rayTrace(shooter, maxDist, 1, false);
 		HitResult.Type type = res.getType();
 		//raytrace entities
 		Box box = new Box(-maxDist, -maxDist, -maxDist, maxDist, maxDist, maxDist).offset(firePos);
-		Vec3d vec3d2 = player.getRotationVec(1.0F);
+		Vec3d vec3d2 = shooter.getRotationVec(1.0F);
 		Vec3d traceDir = firePos.add(vec3d2.x * maxDist, vec3d2.y * maxDist, vec3d2.z * maxDist);
-		EntityHitResult entityHitResult = ProjectileUtil.rayTrace(player, firePos, traceDir, box, (entityx) -> {
+		EntityHitResult entityHitResult = ProjectileUtil.rayTrace(shooter, firePos, traceDir, box, (entityx) -> {
 			return !entityx.isSpectator() && entityx.collides();
 		}, maxDist * maxDist);
 		//raytrace fluids
-		HitResult fluidable = rayTrace(player, maxDist, 0, true);
+		HitResult fluidable = rayTrace(shooter, maxDist, 1, true);
 		FluidState firstFluidHit = null;
 		Vec3d firstFluitHitPos = null;
 		if (fluidable instanceof BlockHitResult) {
@@ -100,38 +101,39 @@ public abstract class AimableWeapon extends ItemWrapper {
 			}
 		}
 		FireingContext context = new FireingContext(
-				player.headYaw,
-				player.pitch,
+				shooter.headYaw,
+				shooter.pitch,
 				firePos,
 				pos,
 				dist,
 				stack,
 				firstFluidHit,
-				firstFluitHitPos
+				firstFluitHitPos,
+				shooter.getRotationVec(1)
 		);
-		if (!preFire(world, player, context)) {
+		if (!preFire(world, shooter, context)) {
 			return; //preFire can cancel if needed
 		}
 		if (res instanceof BlockHitResult) {
 			BlockHitResult blockRes = (BlockHitResult) res;
 			BlockPos hitBlock = blockRes.getBlockPos();
 			BlockState hitBlockState = world.getBlockState(hitBlock);
-			if (hitBlockState.isAir()) {
-				onNoHit(world, player, context);
+			if (hitBlockState.isAir() || context.hit == null) {
+				onNoHit(world, shooter, context);
 			}
 			else
 			{
-				onBlockHit(world, player, context, hitBlock, hitBlockState);
+				onBlockHit(world, shooter, context, hitBlock, hitBlockState);
 			}
 		}
 		else if (res instanceof EntityHitResult) {
 			EntityHitResult entityRes = (EntityHitResult) res;
 			Entity hitEntity = entityRes.getEntity();
-			onEntityHit(world, player, context, hitEntity);
+			onEntityHit(world, shooter, context, hitEntity);
 		}
 		else
 		{
-			onNoHit(world, player, context);
+			onNoHit(world, shooter, context);
 		}
 	}
 	
@@ -145,17 +147,21 @@ public abstract class AimableWeapon extends ItemWrapper {
 				return res;
 			}
 			res = rayTraceBit(player, distanceToTravel, tickDelta, includeFluids, offset);
-			if (!shouldIgnoreHitFor(player.world.getBlockState(res.getBlockPos()))) {
+			BlockPos checkedPos = res.getBlockPos();
+			if (!shouldIgnoreHitFor(player.world, checkedPos, player.world.getBlockState(checkedPos), includeFluids)) {
 				return res;
 			}
 			offset = res.getPos().distanceTo(cameraPos) + 0.5;
 		}
 	}
 	
-	public static boolean shouldIgnoreHitFor(BlockState blockState) {
-		Block block = blockState.getBlock();
+	public static boolean shouldIgnoreHitFor(BlockView world, BlockPos pos, BlockState state, boolean includeFluids) {
+		Block block = state.getBlock();
+		if (includeFluids && block instanceof FluidBlock) {
+			return false;
+		}
 		return block instanceof PlantBlock || block == Blocks.IRON_BARS || block instanceof CarpetBlock
-				|| block instanceof LeavesBlock || block instanceof SugarCaneBlock;
+				|| block instanceof LeavesBlock || block instanceof SugarCaneBlock || state.getCollisionShape(world, pos).isEmpty();
 	}
 	
 	private static BlockHitResult rayTraceBit(LivingEntity player, double maxDistance, int tickDelta, boolean includeFluids, double offset) {
@@ -187,8 +193,9 @@ public abstract class AimableWeapon extends ItemWrapper {
 		public final ItemStack stack;
 		public final FluidState firstFluidHit;
 		public final Vec3d firstFluitHitPos;
+		public final Vec3d direction;
 		
-		public FireingContext(double yaw, double pitch, Vec3d firedFrom, Vec3d hit, double squaredDistanceTraveled, ItemStack stack, FluidState firstFluidHit, Vec3d firstFluitHitPos) {
+		public FireingContext(double yaw, double pitch, Vec3d firedFrom, Vec3d hit, double squaredDistanceTraveled, ItemStack stack, FluidState firstFluidHit, Vec3d firstFluitHitPos, Vec3d direction) {
 			this.yaw = yaw;
 			this.pitch = pitch;
 			this.firedFrom = firedFrom;
@@ -197,6 +204,7 @@ public abstract class AimableWeapon extends ItemWrapper {
 			this.stack = stack;
 			this.firstFluidHit = firstFluidHit;
 			this.firstFluitHitPos = firstFluitHitPos;
+			this.direction = direction;
 		}
 		
 	}

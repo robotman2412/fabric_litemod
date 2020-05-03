@@ -1,0 +1,9 @@
+{
+	"weapon.ak47_type2.fire": {
+		"replace": true,
+		"subtitle": "sound.robot_litemod.weapon.ak47_type2.fire",
+		"sounds": [
+			"ak74_type2_fire"
+		]
+	}
+}

@@ -1,0 +1,19 @@
+{
+  "parent":"item/generated",
+  "textures": {
+    "layer0": "robot_litemod:item/weapon/makarov"
+  },
+  "overrides": [
+    {
+      "predicate": {"stage": 1},
+      "model": "robot_litemod:item/makarov_stage1"
+    }
+  ],
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [60, -90, 0],
+      "translation": [0, 2, 0],
+      "scale": [0.5, 0.5, 0.5]
+    }
+  }
+} 

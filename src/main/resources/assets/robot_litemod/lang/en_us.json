@@ -27,8 +27,18 @@
   "item.robot_litemod.rainbow_cookie": "Rainbow cookie",
   "item.robot_litemod.strawberry_and_chocolate_ice_cream": "Strawberry and chocolate ice cream",
   "item.robot_litemod.strawberry_ice_cream": "Strawberry ice cream",
+  "item.robot_litemod.snelpoeder": "Fastpowder",
+  
+  "item.robot_litemod.ak47_type2": "AK-47 type 2",
+  "item.robot_litemod.makarov_pistol": "Makarov",
+  
+  "item.robot_litemod.banana_mag_07_39_standard": "Banana magazine (07 x 39 standard)",
+  "item.robot_litemod.banana_mag_empty": "Banana magazine (empty)",
+  "item.robot_litemod.box_mag_09_18_standard": "Box magazine (09 x 18 standard)",
+  "item.robot_litemod.box_mag_empty": "Box magazine (empty)",
 
   "itemGroup.robot_litemod.kitchen_supplies": "Kitchen supplies",
+  "itemGroup.robot_litemod.weaponry": "Weaponry",
 
   "block.robot_litemod.redstone_capacitor": "Redstone capacitor",
   "block.robot_litemod.redstone_inferrer": "Redstone inferrer",
@@ -88,6 +98,19 @@
   "death.robot_litemod.drug.cactus": " was so dizzy they fell into a cactus",
   "death.robot_litemod.drug.lava": " mistook the lava for diamonds",
   "death.robot_litemod.drug.fireworks": " was too stoned at the new years party",
-  "death.robot_litemod.drug.bitchfight_lost": " lost the stoned bitchfight with "
+  "death.robot_litemod.drug.bitchfight_lost": " lost the stoned bitchfight with ",
+
+  "robot_litemod.weapon.diameter": "Bullet diameter: ",
+  "robot_litemod.weapon.max_length": "Max bullet length: ",
+  "robot_litemod.weapon.mode": "Weapon mode: ",
+  "robot_litemod.weapon.rate_of_fire": "Rate of fire: ",
+  "robot_litemod.weapon.rate_of_fire.suffix": " shots/s",
+  "robot_litemod.weapon.remaining_ammo": "Remaining ammo: ",
+  
+  "robot_litemod.weapon_mode.single_fire": "Single fire",
+  "robot_litemod.weapon_mode.automatic": "Automatic",
+  
+  "robot_litemod.weapon.out_of_ammo": "Out of ammo!",
+  "robot_litemod.weapon.magazine_empty": "Magazine emptied."
 
 }

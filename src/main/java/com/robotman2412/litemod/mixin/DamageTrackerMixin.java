@@ -90,14 +90,15 @@ public abstract class DamageTrackerMixin {
 					if (biggestAttacker != null) {
 						outTx.append(new TranslatableText("death.robot_litemod.escaping"));
 					}
-				} else if (biggestAttacker != null) {
+				}
+				if (biggestAttacker != null) {
 					if (outTx == null) {
 						outTx = new TranslatableText("death.robot_litemod.drug.surprise_mob");
 						append = new TranslatableText("death.robot_litemod.drug.surprise_mob.suffix");
 					}
 					outTx.append(biggestAttacker.getDisplayName());
 				}
-				if (append != null && outTx != null) {
+				if (append != null) {
 					outTx.append(append);
 				}
 				if (outTx != null) {

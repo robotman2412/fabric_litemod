@@ -23,7 +23,7 @@ public abstract class Schema2100Mixin {
 	public void onRegisterEntities(Schema schema, CallbackInfoReturnable<Map<String, Supplier<TypeTemplate>>> cir) {
 		Map<String, Supplier<TypeTemplate>> map = cir.getReturnValue();
 		method_21746(schema, map, "robot_litemod:test_living_entity");
-		
+		method_21746(schema, map, "robot_litemod:rocket_launcher_rocket");
 	}
 
 }

@@ -6,21 +6,32 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HyperKeyBinding extends FabricKeyBinding {
 	
 	public static final List<HyperKeyBinding> keys = new ArrayList<>();
 	
-	public boolean isPressed;
-	public List<Runnable> onPress;
-	public List<Runnable> onRelease;
+	private boolean isPressed;
+	private List<Runnable> onPress;
+	private List<Runnable> onRelease;
 	
 	protected HyperKeyBinding(Identifier id, InputUtil.Type type, int code, String category) {
 		super(id, type, code, category);
 		onPress = new ArrayList<>();
 		onRelease = new ArrayList<>();
 		keys.add(this);
+	}
+	
+	public HyperKeyBinding onPress(Runnable... actions) {
+		onPress.addAll(Arrays.asList(actions));
+		return this;
+	}
+	
+	public HyperKeyBinding onRelease(Runnable... actions) {
+		onRelease.addAll(Arrays.asList(actions));
+		return this;
 	}
 	
 	public void tick() {

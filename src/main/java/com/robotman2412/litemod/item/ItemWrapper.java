@@ -6,15 +6,20 @@ import net.minecraft.util.Identifier;
 
 public class ItemWrapper extends Item {
 	
-	public final String itemName;
+	public Identifier id;
 	
 	public ItemWrapper(Settings settings, String itemName) {
 		super(settings);
-		this.itemName = itemName;
+		this.id = new Identifier(FabricLitemod.MOD_ID, itemName);
+	}
+	
+	public ItemWrapper setID(Identifier id) {
+		this.id = id;
+		return this;
 	}
 	
 	public Identifier getIdentifier() {
-		return new Identifier(FabricLitemod.MOD_ID, itemName);
+		return id;
 	}
 	
 }

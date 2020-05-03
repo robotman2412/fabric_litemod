@@ -94,7 +94,7 @@ public class RedstoneInferrerBlock extends AbstractRedstoneTileBlock implements 
 		ChannelIdentifier channel = ent.channel;
 		UUID uuid = channel.ownerUUID();
 		boolean isSender = !state.get(IS_SENDER);
-		boolean displaySender = isSender ^ !player.getUuid().equals(uuid);
+		boolean displaySender = isSender ^ (!player.getUuid().equals(uuid) && uuid != null);
 		if (!world.isClient()) {
 			ServerWorld serverWorld = (ServerWorld) world; 
 			MinecraftServer server = serverWorld.getServer();

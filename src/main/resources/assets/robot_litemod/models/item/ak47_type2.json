@@ -1,1 +1,22 @@
-{"parent":"item/generated","textures":{"layer0":"robot_litemod:item/weapon/ak47_type2"}} 
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "robot_litemod:item/weapon/ak47_type2"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [60, -90, 0],
+			"translation": [0, 4, 0]
+		}
+	},
+	"overrides": [
+		{
+			"predicate": {"stage": 1},
+			"model": "robot_litemod:item/ak47_type2_stage1"
+		},
+		{
+			"predicate": {"stage": 2},
+			"model": "robot_litemod:item/ak47_type2_stage1"
+		}
+	]
+}

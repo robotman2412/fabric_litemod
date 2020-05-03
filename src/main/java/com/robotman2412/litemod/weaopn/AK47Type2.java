@@ -1,11 +1,36 @@
 package com.robotman2412.litemod.weaopn;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
 
 public class AK47Type2 extends AbstractionOfTheGun {
 	
 	public AK47Type2() {
-		super("ak47_type2");
+		super(new Settings(), "ak47_type2");
+		addPropertyGetter(new Identifier("stage"), (stack, world, entity) -> {
+			LastFireBullshite shite = map.get(stack);
+			if (shite == null) {
+				return 0;
+			}
+			if (world == null) {
+				return 0;
+			}
+			long lastFired = shite.lastFireTick;
+			long time = world.getTime();
+			if (lastFired == time) {
+				return 1;
+			}
+			else if (lastFired + 1 == time || lastFired + 2 == time) {
+				return 2;
+			}
+			else if (getRemainingAmmo(stack) < 1) {
+				return 2;
+			}
+			else
+			{
+				return 0;
+			}
+		});
 	}
 	
 	@Override
@@ -38,6 +63,26 @@ public class AK47Type2 extends AbstractionOfTheGun {
 	@Override
 	public int getMaximumDamage(ItemStack stack) {
 		return 5;
+	}
+	
+	@Override
+	public float getMinRecoil(ItemStack stack) {
+		return 1f;
+	}
+	
+	@Override
+	public float getMaxRecoil(ItemStack stack) {
+		return 3.5f;
+	}
+	
+	@Override
+	public int getBulletDiameter(ItemStack stack) {
+		return 7;
+	}
+	
+	@Override
+	public int getMaxBulletLength(ItemStack stack) {
+		return 42;
 	}
 	
 	@Override

@@ -11,6 +11,7 @@ import com.robotman2412.litemod.block.itemduct.GoldenItemductBlockEntity;
 import com.robotman2412.litemod.block.pushableredstone.*;
 import com.robotman2412.litemod.effect.HealthConfusionEffect;
 import com.robotman2412.litemod.effect.StatusEffexWrapper;
+import com.robotman2412.litemod.entity.RocketLauncherRocket;
 import com.robotman2412.litemod.entity.TestLivingEntity;
 import com.robotman2412.litemod.foods.BLENDOMATOR9000BlockEntity;
 import com.robotman2412.litemod.foods.BlenderRecipe;
@@ -19,6 +20,10 @@ import com.robotman2412.litemod.item.*;
 import com.robotman2412.litemod.item.superweapon.SuperWeapons;
 import com.robotman2412.litemod.util.CustomItemGroupAppender;
 import com.robotman2412.litemod.weaopn.AK47Type2;
+import com.robotman2412.litemod.weaopn.AbstractionOfTheGun;
+import com.robotman2412.litemod.weaopn.Makarov;
+import com.robotman2412.litemod.weaopn.ammo.MunitionItem;
+import com.robotman2412.litemod.weaopn.ammo.MunitionType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
@@ -39,8 +44,11 @@ public class FabricLitemod implements ModInitializer {
 	
 	public static final String MOD_ID = "robot_litemod";
 	
+	//Client to server packets
 	public static final Identifier SET_CHANNEL_PACKET = new Identifier(MOD_ID, "set_channel");
 	public static final Identifier SET_TRANSMISSION_PACKET = new Identifier(MOD_ID, "set_transmission");
+	public static final Identifier WEAPON_SWITCH_MODE_PACKET = new Identifier(MOD_ID, "switch_mode");
+	public static final Identifier WEAPON_RELOAD_PACKET = new Identifier(MOD_ID, "reload_weapon");
 	
 	public static final Identifier BLENDOMATOR9000_CONTAINER = new Identifier(MOD_ID, "blendomator_9000");
 	public static final Identifier BLENDER_RECIPE = new Identifier(MOD_ID, "blender");
@@ -72,6 +80,13 @@ public class FabricLitemod implements ModInitializer {
 	public static final SlimecompassItem SLIME_COMPASS_ITEM = new SlimecompassItem();
 	
 	public static final AK47Type2 AK_47_TYPE_2 = new AK47Type2();
+	public static final Makarov MAKAROV = new Makarov();
+	
+	public static final ItemWrapper BANANA_EMPTY = new ItemWrapper(new Item.Settings().group(WEAPONS), "banana_mag_empty");
+	public static final MunitionItem BANANA_WITH_STANDARD_07_39 = new MunitionItem(BANANA_EMPTY, MunitionType.STANDARD_07_39, 30, "banana_mag_07_39_standard");
+	
+	public static final ItemWrapper BOX_EMPTY = new ItemWrapper(new Item.Settings().group(WEAPONS), "box_mag_empty");
+	public static final MunitionItem BOX_WITH_STANDARD_09_18 = new MunitionItem(BOX_EMPTY, MunitionType.STANDARD_09_18, 10, "box_mag_09_18_standard");
 	
 	public static final ItemWrapper[] ALL_ITEMS = {
 			ESSENCE_OF_BULLSHITE_ITEM,
@@ -80,7 +95,13 @@ public class FabricLitemod implements ModInitializer {
 			KITCHEN_KNIFE_ITEM,
 			SLIME_COMPASS_ITEM,
 			
-			AK_47_TYPE_2
+			AK_47_TYPE_2,
+			MAKAROV,
+			
+			BANANA_WITH_STANDARD_07_39,
+			BANANA_EMPTY,
+			BOX_WITH_STANDARD_09_18,
+			BOX_EMPTY
 	};
 	//endregion items
 	
@@ -128,6 +149,7 @@ public class FabricLitemod implements ModInitializer {
 	
 	//region entities
 	public static EntityType<TestLivingEntity> TEST_LIVING_ENTITY_TYPE;
+	public static EntityType<RocketLauncherRocket> ROCKET_LAUNCHER_ROCKT_TYPE;
 	//endregion entities
 	
 	private static ItemStack getAK47Item() {
@@ -140,6 +162,7 @@ public class FabricLitemod implements ModInitializer {
 	
 	@Override
 	public void onInitialize() {
+		//standard blocks and items
 		for (StatusEffexWrapper wrapper : ALL_EFFEX) {
 			Registry.register(Registry.STATUS_EFFECT, wrapper.getIdentifier(), wrapper);
 		}
@@ -175,7 +198,7 @@ public class FabricLitemod implements ModInitializer {
 		Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "movable_redstone_wall_torch"), PUSHA_REDSTONE_WALL_TORCH_BLOCK);
 		Registry.register(Registry.ITEM, new Identifier(MOD_ID, "movable_redstone_torch"), PUSHA_REDSTONE_TORCH_ITEM);
 		
-		
+		//register "entities"
 		TEST_LIVING_ENTITY_TYPE = EntityType.Builder.create(TestLivingEntity::new, EntityCategory.CREATURE)
 				//this is so dumb... why is Entity#getDimensions(EntityPose) a thing?!?
 				//spent actual hours trying to find out why it looked right but was wrong
@@ -183,7 +206,7 @@ public class FabricLitemod implements ModInitializer {
 				.build(new Identifier(MOD_ID, "test_living_entity").toString());
 		Registry.register(Registry.ENTITY_TYPE, new Identifier(MOD_ID, "test_living_entity"), TEST_LIVING_ENTITY_TYPE);
 		
-		
+		//register block entities
 		REDSTONE_CAPACITOR_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, MOD_ID + ":capacitor",
 				BlockEntityType.Builder.create(RedstoneCapacitorBlockEntity::new, REDSTONE_CAPACITOR_BLOCK).build(null)
 		);
@@ -215,20 +238,23 @@ public class FabricLitemod implements ModInitializer {
 						THE_STONE_OF_GRAVES_BLOCK
 				).build(null)
 		);
-		
 		GOLDEN_ITEMDUCT_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, MOD_ID + ":golden_itemduct",
 				BlockEntityType.Builder.create(GoldenItemductBlockEntity::new, GOLDEN_ITEMDUCT_BLOCK).build(null)
 		);
 		
-		
+		//register recipe types
 		Registry.register(Registry.RECIPE_TYPE, BLENDER_RECIPE, BLENDER_RECIPE_TYPE = new RecipeType<BlenderRecipe>() {});
 		Registry.register(Registry.RECIPE_SERIALIZER, BLENDER_RECIPE, BlenderRecipe.Serializer.INSTANCE);
 		ContainerProviderRegistry.INSTANCE.registerFactory(BLENDOMATOR9000_CONTAINER, (syncId, id, player, buf) -> {
 			final BlockEntity blockEntity = player.world.getBlockEntity(buf.readBlockPos());
 			return((BLENDOMATOR9000BlockEntity) blockEntity).createMenu(syncId, player.inventory, player);
 		});
+		
+		//register packets
 		ServerSidePacketRegistry.INSTANCE.register(SET_CHANNEL_PACKET, FrequencyTunerItem::PACKIDGE);
 		ServerSidePacketRegistry.INSTANCE.register(SET_TRANSMISSION_PACKET, RemoteRedstoneInferrerItem::PACKIDGE);
+		ServerSidePacketRegistry.INSTANCE.register(WEAPON_SWITCH_MODE_PACKET, AbstractionOfTheGun::switchModePacket);
+		ServerSidePacketRegistry.INSTANCE.register(WEAPON_RELOAD_PACKET, AbstractionOfTheGun::reloadPacket);
 	}
 	
 }

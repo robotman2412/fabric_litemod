@@ -17,7 +17,9 @@
     "GameRendererMixin",
     "BlockColorsMixin",
     "ClientPlayNetworkHandlerMixin",
-    "HeldItemRendererMixin"
+    "MinecraftClientMixin",
+    "TitleScreenMixin",
+    "PaintingManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
