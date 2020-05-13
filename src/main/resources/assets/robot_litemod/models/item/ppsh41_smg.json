@@ -1,0 +1,18 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "robot_litemod:item/weapon/ppsh41_smg"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [60, -90, 0],
+			"translation": [0, 4, 0]
+		}
+	},
+	"overrides": [
+		{
+			"predicate": {"stage": 1},
+			"model": "robot_litemod:item/ppsh41_stage1"
+		}
+	]
+}

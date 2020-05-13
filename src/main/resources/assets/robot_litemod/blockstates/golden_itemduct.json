@@ -1,5 +1,187 @@
-{ 
-    "variants": { 
-      "": { "model": "block/chest"}
-	} 
-} 
+{
+    "multipart": [
+		{
+			"apply": {
+				"model": "robot_litemod:block/itemduct/gold/itemduct_center_glass",
+				"x": 90,
+				"uvlock": false
+			},
+			"when": {"down": false}
+		},
+		{
+			"apply": {
+				"model": "robot_litemod:block/itemduct/gold/itemduct_center_glass",
+				"x": 270,
+				"uvlock": false
+			},
+			"when": {"up": false}
+		},
+        {
+			"apply": {
+				"model": "robot_litemod:block/itemduct/gold/itemduct_center",
+				"uvlock": false
+			},
+			"when": {
+				"OR": [
+					{"north": true, "south": false},
+					{"south": true, "north": false},
+					{"east": true, "west": false},
+					{"west": true, "east": false},
+					{"up": true, "down": false},
+					{"down": true, "up": false},
+					{"north": true, "east": true, "south": true, "west": true, "up": true, "down": true},
+					{"north": false, "east": false, "south": false, "west": false, "up": false, "down": false}
+				]
+			}
+        },
+		{
+			"apply": {
+				"model": "robot_litemod:block/itemduct/gold/itemduct_straight_disp",
+				"uvlock": false
+			},
+			"when": {"north": true, "south": true, "east": false, "west": false, "up": false, "down": false}
+		},
+		{
+			"apply": {
+				"model": "robot_litemod:block/itemduct/gold/itemduct_straight_disp",
+				"y": 90,
+				"uvlock": false
+			},
+			"when": {"east": true, "west": true, "north": false, "south": false, "up": false, "down": false}
+		},
+		{
+			"apply": {
+				"model": "robot_litemod:block/itemduct/gold/itemduct_straight_disp",
+				"y": 90,
+				"uvlock": false
+			},
+			"when": {"east": false, "west": false, "north": false, "south": false, "up": true, "down": true}
+		},
+		{
+			"apply": {
+				"model": "robot_litemod:block/itemduct/gold/itemduct_short",
+				"uvlock": false
+			},
+			"when": {
+				"OR": [
+					{"east": true, "north": true},
+					{"south": false, "north": true},
+					{"west": true, "north": true},
+					{"up": true, "north": true},
+					{"down": true, "north": true}
+				]
+			}
+		},
+		{
+			"apply": {
+				"model": "robot_litemod:block/itemduct/gold/itemduct_short",
+				"uvlock": false,
+				"y": 90
+			},
+			"when": {
+				"OR": [
+					{"north": true, "east": true},
+					{"south": true, "east": true},
+					{"west": false, "east": true},
+					{"up": true, "east": true},
+					{"down": true, "east": true}
+				]
+			}
+		},
+        {
+			"apply": {
+				"model": "robot_litemod:block/itemduct/gold/itemduct_short",
+				"x": 90,
+				"uvlock": false
+			},
+			"when": {
+				"OR": [
+					{"east": true, "down": true},
+					{"north": true, "down": true},
+					{"west": true, "down": true},
+					{"up": false, "down": true},
+					{"south": true, "down": true}
+				]
+			}
+        },
+        {
+			"apply": {
+				"model": "robot_litemod:block/itemduct/gold/itemduct_short",
+				"x": 270,
+				"uvlock": false
+			},
+			"when": {
+				"OR": [
+					{"east": true, "up": true},
+					{"north": true, "up": true},
+					{"west": true, "up": true},
+					{"down": false, "up": true},
+					{"south": true, "up": true}
+				]
+			}
+        },
+		{
+			"apply": {
+				"model": "robot_litemod:block/itemduct/gold/itemduct_short",
+				"uvlock": false,
+				"y": 180
+			},
+			"when": {
+				"OR": [
+					{"east": true, "south": true},
+					{"north": false, "south": true},
+					{"west": true, "south": true},
+					{"up": true, "south": true},
+					{"down": true, "south": true}
+				]
+			}
+		},
+		{
+			"apply": {
+				"model": "robot_litemod:block/itemduct/gold/itemduct_short",
+				"uvlock": false,
+				"y": 270
+			},
+			"when": {
+				"OR": [
+					{"north": true, "west": true},
+					{"south": true, "west": true},
+					{"east": false, "west": true},
+					{"up": true, "west": true},
+					{"down": true, "west": true}
+				]
+			}
+		},
+		{
+			"apply": {
+				"model": "robot_litemod:block/itemduct/gold/itemduct_center_glass",
+				"uvlock": false
+			},
+			"when": {"north": false}
+		},
+		{
+			"apply": {
+				"model": "robot_litemod:block/itemduct/gold/itemduct_center_glass",
+				"y": 90,
+				"uvlock": false
+			},
+			"when": {"east": false}
+		},
+		{
+			"apply": {
+				"model": "robot_litemod:block/itemduct/gold/itemduct_center_glass",
+				"y": 180,
+				"uvlock": false
+			},
+			"when": {"south": false}
+		},
+		{
+			"apply": {
+				"model": "robot_litemod:block/itemduct/gold/itemduct_center_glass",
+				"y": 270,
+				"uvlock": false
+			},
+			"when": {"west": false}
+		}
+    ]
+}

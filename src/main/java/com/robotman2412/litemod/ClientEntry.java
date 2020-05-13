@@ -25,6 +25,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
@@ -42,7 +43,7 @@ public class ClientEntry implements ClientModInitializer {
 	
 	public static boolean shouldOverrideWindowTitle = true;
 	
-	public static final boolean communistEasterEgg = true || new SecureRandom().nextDouble() < 0.01; //1% chance of getting the communist easter egg
+	public static final boolean communistEasterEgg = new SecureRandom().nextDouble() < 0.01; //1% chance of getting the communist easter egg
 	
 	public static final long easterEggSeed = new SecureRandom().nextLong();
 	
@@ -100,6 +101,10 @@ public class ClientEntry implements ClientModInitializer {
 	
 	public static double recoilBackThreshold() {
 		return 0.2;
+	}
+	
+	public static boolean isClientPlayer(Entity entity) {
+		return entity == client.player && entity != null;
 	}
 	
 	@Override

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IBW",
+    "  S"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_nugget"
+    },
+    "B": {
+      "item": "robot_litemod:barrel"
+    },
+    "W": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "robot_litemod:spring"
+    }
+  },
+  "result": {
+    "item": "robot_litemod:slide"
+  }
+}

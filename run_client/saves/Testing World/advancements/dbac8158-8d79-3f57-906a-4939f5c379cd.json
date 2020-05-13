@@ -1,16 +1,4 @@
 {
-  "minecraft:recipes/redstone/dropper": {
-    "criteria": {
-      "has_redstone": "2020-03-25 10:04:50 +0100"
-    },
-    "done": true
-  },
-  "minecraft:recipes/redstone/redstone_block": {
-    "criteria": {
-      "has_redstone": "2020-03-25 10:04:50 +0100"
-    },
-    "done": true
-  },
   "minecraft:recipes/tools/clock": {
     "criteria": {
       "has_redstone": "2020-03-25 10:04:50 +0100"
@@ -18,12 +6,6 @@
     "done": true
   },
   "minecraft:recipes/redstone/redstone_torch": {
-    "criteria": {
-      "has_redstone": "2020-03-25 10:04:50 +0100"
-    },
-    "done": true
-  },
-  "minecraft:recipes/redstone/piston": {
     "criteria": {
       "has_redstone": "2020-03-25 10:04:50 +0100"
     },
@@ -44,6 +26,48 @@
   "minecraft:recipes/redstone/note_block": {
     "criteria": {
       "has_redstone": "2020-03-25 10:04:50 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/dropper": {
+    "criteria": {
+      "has_redstone": "2020-03-25 10:04:50 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/redstone_block": {
+    "criteria": {
+      "has_redstone": "2020-03-25 10:04:50 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/black_carpet_from_white_carpet": {
+    "criteria": {
+      "has_black_dye": "2020-05-08 18:41:10 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/piston": {
+    "criteria": {
+      "has_redstone": "2020-03-25 10:04:50 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/light_gray_dye_from_black_white_dye": {
+    "criteria": {
+      "has_black_dye": "2020-05-08 18:41:10 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/black_stained_glass_pane_from_glass_pane": {
+    "criteria": {
+      "has_black_dye": "2020-05-08 18:41:10 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/gray_dye": {
+    "criteria": {
+      "has_black_dye": "2020-05-08 18:41:10 +0200"
     },
     "done": true
   },

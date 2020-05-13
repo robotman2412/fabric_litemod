@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IS",
+    " I"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "robot_litemod:slide"
+    }
+  },
+  "result": {
+    "item": "robot_litemod:makarov_pistol"
+  }
+}

@@ -2,12 +2,15 @@ package com.robotman2412.litemod.mixin;
 
 import com.robotman2412.litemod.FabricLitemod;
 import com.robotman2412.litemod.util.Utils;
+import com.robotman2412.litemod.weaopn.Dragunov;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -65,6 +68,26 @@ public class InGameHudMixin extends DrawableHelper {
 			y += Math.round(Math.cos(angle0) * extent);
 		}
 		hudOn.blit(x, y, u, v, width, height);
+	}
+	
+	@Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getAttackCooldownProgress(F)F"), method = "renderCrosshair")
+	public float getAttackIndicatorProxy(ClientPlayerEntity player, float baseTime) {
+		ItemStack stack = player.getActiveItem();
+		if (player.isUsingItem() && stack.getItem() instanceof Dragunov) {
+			Dragunov gunne = (Dragunov) stack.getItem();
+			return gunne.getEffectiveHoldTicks(stack, player.world) / 60f;
+		}
+		return player.getAttackCooldownProgress(baseTime);
+	}
+	
+	@Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getAttackCooldownProgress(F)F"), method = "renderHotbar")
+	public float getAttackIndicatorProxy0(ClientPlayerEntity player, float baseTime) {
+		ItemStack stack = player.getActiveItem();
+		if (player.isUsingItem() && stack.getItem() instanceof Dragunov) {
+			Dragunov gunne = (Dragunov) stack.getItem();
+			return gunne.getEffectiveHoldTicks(stack, player.world) / 60f;
+		}
+		return player.getAttackCooldownProgress(baseTime);
 	}
 	
 }

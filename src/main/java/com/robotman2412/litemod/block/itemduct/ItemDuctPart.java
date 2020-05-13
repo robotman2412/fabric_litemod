@@ -1,9 +1,15 @@
 package com.robotman2412.litemod.block.itemduct;
 
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.SidedInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+
+import java.util.function.Predicate;
 
 public abstract class ItemDuctPart<Type extends ItemDuctPart> {
 	
@@ -12,6 +18,7 @@ public abstract class ItemDuctPart<Type extends ItemDuctPart> {
 	public BlockEntity targetBlockEntity;
 	public AbstractItemductBlockEntity entity;
 	public int extractionTimer;
+	public Direction direction;
 	
 	protected ItemDuctPart(ItemDuctPartType<Type> type) {
 		this.type = type;
@@ -31,31 +38,58 @@ public abstract class ItemDuctPart<Type extends ItemDuctPart> {
 		return 2;
 	}
 	
-	public final void extractionTick() {
+	public final ItemStack extractionTick() {
 		int tick = extractionTickEvery();
 		if (tick < 1) {
-			return;
+			return null;
 		}
 		extractionTimer ++;
 		if (extractionTimer >= tick) {
 			extractionTimer = 0;
-			extraction();
+			return extraction();
 		}
+		return null;
 	}
 	
 	/**
 	 * Item may be pulled into the current itemduct.
+	 * @return the item pulled in
 	 */
-	public void extraction() {
-		
+	public ItemStack extraction() {
+		return null;
+	}
+	
+	protected ItemStack simpleExtraction(Predicate<ItemStack> predicate) {
+		if (targetBlockEntity instanceof SidedInventory) {
+			SidedInventory inventory = (SidedInventory) targetBlockEntity;
+			int[] slots = inventory.getInvAvailableSlots(direction.getOpposite());
+			for (int i : slots) {
+				ItemStack stack = inventory.getInvStack(i);
+				if (!stack.isEmpty() && (predicate == null || predicate.test(stack))) {
+					inventory.setInvStack(i, ItemStack.EMPTY);
+					return stack;
+				}
+			}
+		}
+		else if (targetBlockEntity instanceof Inventory) {
+			Inventory inventory = (Inventory) targetBlockEntity;
+			for (int i = 0; i < inventory.getInvSize(); i++) {
+				ItemStack stack = inventory.getInvStack(i);
+				if (!stack.isEmpty() && (predicate == null || predicate.test(stack))) {
+					inventory.setInvStack(i, ItemStack.EMPTY);
+					return stack;
+				}
+			}
+		}
+		return null;
 	}
 	
 	/**
-	 * Checked before the check if an item fits in the other block.
+	 * Should return false when the item would be immediately extracted.
 	 * @return whether an item can go out of the current itemduct
 	 * @param item the item to filter
 	 */
-	public abstract boolean canInsert(ItemDuctItem item); //TODO: whatever arguments this takes
+	public abstract boolean canInsert(ItemDuctItem item);
 	
 	public abstract Object getRender(AbstractItemductBlockEntity itemduct); //TODO: create a renderer type
 	

@@ -19,9 +19,7 @@ import com.robotman2412.litemod.foods.FoodItem;
 import com.robotman2412.litemod.item.*;
 import com.robotman2412.litemod.item.superweapon.SuperWeapons;
 import com.robotman2412.litemod.util.CustomItemGroupAppender;
-import com.robotman2412.litemod.weaopn.AK47Type2;
-import com.robotman2412.litemod.weaopn.AbstractionOfTheGun;
-import com.robotman2412.litemod.weaopn.Makarov;
+import com.robotman2412.litemod.weaopn.*;
 import com.robotman2412.litemod.weaopn.ammo.MunitionItem;
 import com.robotman2412.litemod.weaopn.ammo.MunitionType;
 import net.fabricmc.api.ModInitializer;
@@ -81,12 +79,26 @@ public class FabricLitemod implements ModInitializer {
 	
 	public static final AK47Type2 AK_47_TYPE_2 = new AK47Type2();
 	public static final Makarov MAKAROV = new Makarov();
+	public static final Dragunov DRAGUNOV = new Dragunov();
+	public static final PPSh41 PPSH_41 = new PPSh41();
+	
+	public static final ItemWrapper SPRING_ITEM = new ItemWrapper(new Item.Settings().group(WEAPONS), "spring");
+	public static final ItemWrapper SLIDE_ITEM = new ItemWrapper(new Item.Settings().group(WEAPONS), "slide");
+	public static final ItemWrapper BOLT_ITEM = new ItemWrapper(new Item.Settings().group(WEAPONS), "bolt");
+	public static final ItemWrapper STOCK_ITEM = new ItemWrapper(new Item.Settings().group(WEAPONS), "stock");
+	public static final ItemWrapper BARREL_ITEM = new ItemWrapper(new Item.Settings().group(WEAPONS), "barrel");
 	
 	public static final ItemWrapper BANANA_EMPTY = new ItemWrapper(new Item.Settings().group(WEAPONS), "banana_mag_empty");
 	public static final MunitionItem BANANA_WITH_STANDARD_07_39 = new MunitionItem(BANANA_EMPTY, MunitionType.STANDARD_07_39, 30, "banana_mag_07_39_standard");
 	
+	public static final ItemWrapper DRUM_EMPTY = new ItemWrapper(new Item.Settings().group(WEAPONS), "drum_mag_empty");
+	public static final MunitionItem DRUM_WITH_STANDARD_07_39 = new MunitionItem(DRUM_EMPTY, MunitionType.STANDARD_07_39, 70, "drum_mag_07_39_standard");
+	
 	public static final ItemWrapper BOX_EMPTY = new ItemWrapper(new Item.Settings().group(WEAPONS), "box_mag_empty");
 	public static final MunitionItem BOX_WITH_STANDARD_09_18 = new MunitionItem(BOX_EMPTY, MunitionType.STANDARD_09_18, 10, "box_mag_09_18_standard");
+	
+	public static final ItemWrapper BULLET_09_18_STANDARD = new ItemWrapper(new Item.Settings(), "bullet_09_18_standard");
+	public static final ItemWrapper BULLET_07_39_STANDARD = new ItemWrapper(new Item.Settings(), "bullet_07_39_standard");
 	
 	public static final ItemWrapper[] ALL_ITEMS = {
 			ESSENCE_OF_BULLSHITE_ITEM,
@@ -97,11 +109,24 @@ public class FabricLitemod implements ModInitializer {
 			
 			AK_47_TYPE_2,
 			MAKAROV,
+			DRAGUNOV,
+			PPSH_41,
+			
+			SPRING_ITEM,
+			SLIDE_ITEM,
+			BOLT_ITEM,
+			STOCK_ITEM,
+			BARREL_ITEM,
 			
 			BANANA_WITH_STANDARD_07_39,
 			BANANA_EMPTY,
 			BOX_WITH_STANDARD_09_18,
-			BOX_EMPTY
+			BOX_EMPTY,
+			DRUM_WITH_STANDARD_07_39,
+			DRUM_EMPTY,
+			
+			BULLET_07_39_STANDARD,
+			BULLET_09_18_STANDARD
 	};
 	//endregion items
 	

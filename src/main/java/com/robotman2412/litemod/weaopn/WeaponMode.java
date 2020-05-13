@@ -11,7 +11,7 @@ public class WeaponMode {
 	private static Map<Identifier, WeaponMode> modeMap = new HashMap<>();
 	
 	public static WeaponMode SINGLE_FIRE = ensureModeRegistered(new Identifier(FabricLitemod.MOD_ID, "single_fire"), 1, true, false);
-	public static WeaponMode TRI_SHOT = ensureModeRegistered(new Identifier(FabricLitemod.MOD_ID, "tri_shot"), 1, true, false);
+	public static WeaponMode TRI_SHOT = ensureModeRegistered(new Identifier(FabricLitemod.MOD_ID, "tri_shot"), 3, true, false);
 	public static WeaponMode AUTOMATIC = ensureModeRegistered(new Identifier(FabricLitemod.MOD_ID, "automatic"), 1, false, true);
 	public static WeaponMode MANUAL = ensureModeRegistered(new Identifier(FabricLitemod.MOD_ID, "manual"), 1, false, false);
 	

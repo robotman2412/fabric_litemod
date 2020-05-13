@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "robot_litemod:banana_mag_empty"
+    },
+    {
+      "item": "robot_litemod:bullet_07_39_standard"
+    },
+    {
+      "item": "robot_litemod:bullet_07_39_standard"
+    },
+    {
+      "item": "robot_litemod:bullet_07_39_standard"
+    },
+    {
+      "item": "robot_litemod:bullet_07_39_standard"
+    },
+    {
+      "item": "robot_litemod:bullet_07_39_standard"
+    },
+    {
+      "item": "robot_litemod:bullet_07_39_standard"
+    },
+    {
+      "item": "robot_litemod:bullet_07_39_standard"
+    }
+  ],
+  "result": {
+    "item": "robot_litemod:banana_mag_07_39_standard"
+  }
+}

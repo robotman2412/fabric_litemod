@@ -10,7 +10,9 @@
     "RedstoneWireBlockMixin",
     "AbstractRedstoneGateMixin",
     "TameableEntityMixin",
-    "PlayerContainerEquipmentSlotMixin"
+    "PlayerContainerEquipmentSlotMixin",
+    "LoomContainerMixin",
+    "LoomScreenMixin"
   ],
   "client": [
     "InGameHudMixin",
@@ -19,7 +21,7 @@
     "ClientPlayNetworkHandlerMixin",
     "MinecraftClientMixin",
     "TitleScreenMixin",
-    "PaintingManagerMixin"
+    "MouseMixin"
   ],
   "injectors": {
     "defaultRequire": 1

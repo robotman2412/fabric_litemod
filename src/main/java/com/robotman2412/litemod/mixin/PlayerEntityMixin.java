@@ -31,10 +31,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	
 	@Shadow protected abstract void vanishCursedItems();
 	
-	/**
-	 * This is a mixin, construction is illegal.
-	 * The LivingEntity class wants a constructor, tough.
-	 */
 	private PlayerEntityMixin(EntityType<? extends LivingEntity> type, World world) {
 		super(type, world);
 	}

@@ -1,0 +1,12 @@
+{
+  "parent":"item/generated",
+  "textures": {
+    "layer0": "robot_litemod:item/weapon/dragunov"
+  },
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [60, -90, 0],
+      "translation": [0, 4, 0]
+    }
+  }
+} 

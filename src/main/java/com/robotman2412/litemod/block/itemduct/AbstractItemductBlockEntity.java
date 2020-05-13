@@ -6,37 +6,35 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public abstract class AbstractItemductBlockEntity extends BlockEntity implements Tickable {
 	
-	protected ItemDuctPart up;
-	protected ItemDuctPart down;
-	protected ItemDuctPart north;
-	protected ItemDuctPart east;
-	protected ItemDuctPart south;
-	protected ItemDuctPart west;
+	public ItemDuctPart up;
+	public ItemDuctPart down;
+	public ItemDuctPart north;
+	public ItemDuctPart east;
+	public ItemDuctPart south;
+	public ItemDuctPart west;
 	
-	protected List<ItemDuctItem> items;
+	public List<ItemDuctItem> items;
+	public boolean doSendUpdate;
 	
 	public AbstractItemductBlockEntity(BlockEntityType<?> type) {
 		super(type);
 		items = new LinkedList<>();
-		ItemDuctItem itemi = new ItemDuctItem();
-		itemi.direction = Direction.NORTH;
-		itemi.isTravelingToCenter = true;
-		itemi.distanceFromCenter = 4;
-		itemi.stack = new ItemStack(Items.DAMAGED_ANVIL, 32);
-		items.add(itemi);
 	}
 	
 	public abstract ItemDuctPartType getDefaultPart();
@@ -46,34 +44,51 @@ public abstract class AbstractItemductBlockEntity extends BlockEntity implements
 	}
 	
 	public boolean wouldConnectToBlock(Direction direction) {
+		if (world == null) {
+			return false;
+		}
 		BlockPos pos = getPos().offset(direction);
-		BlockState state = getWorld().getBlockState(pos);
-		BlockEntity entity = getWorld().getBlockEntity(pos);
+		BlockState state = world.getBlockState(pos);
+		BlockEntity entity = world.getBlockEntity(pos);
 		return wouldConnectToBlock(pos, direction, state, entity);
 	}
 	
 	public boolean wouldConnectToBlock(BlockPos pos, Direction relativeDirection, BlockState otherState, BlockEntity otherEntity) {
-		return otherEntity instanceof Inventory;
+		return otherEntity instanceof AbstractItemductBlockEntity || otherEntity instanceof Inventory;
 	}
 	
 	public void retryConnections() {
-		retryConnectionDir(Direction.UP);
-		retryConnectionDir(Direction.DOWN);
-		retryConnectionDir(Direction.NORTH);
-		retryConnectionDir(Direction.EAST);
-		retryConnectionDir(Direction.SOUTH);
-		retryConnectionDir(Direction.WEST);
+		boolean b = retryConnectionDir(Direction.UP);
+		b |=		retryConnectionDir(Direction.DOWN);
+		b |=		retryConnectionDir(Direction.NORTH);
+		b |=		retryConnectionDir(Direction.EAST);
+		b |=		retryConnectionDir(Direction.SOUTH);
+		b |=		retryConnectionDir(Direction.WEST);
+		if (b) {
+			BlockState state = world.getBlockState(pos);
+			world.setBlockState(pos, state
+					.with(AbstractItemductBlock.UP, up != null)
+					.with(AbstractItemductBlock.DOWN, down != null)
+					.with(AbstractItemductBlock.NORTH, north != null)
+					.with(AbstractItemductBlock.EAST, east != null)
+					.with(AbstractItemductBlock.SOUTH, south != null)
+					.with(AbstractItemductBlock.WEST, west != null)
+			);
+		}
 	}
 	
-	public void retryConnectionDir(Direction direction) {
+	public boolean retryConnectionDir(Direction direction) {
 		ItemDuctPart part = getPart(direction);
-		if (!wouldConnectToBlock(direction) &&part != null && part.type == getDefaultPart()) {
+		if (!wouldConnectToBlock(direction) && part != null && part.type == getDefaultPart()) {
 			setPart(direction, null);
 			part.onRemoved();
+			return true;
 		}
 		if (wouldConnectToBlock(direction) && part == null) {
 			setPart(direction, getDefaultPart());
+			return true;
 		}
+		return false;
 	}
 	
 	public void setPart(Direction direction, ItemDuctPartType partType) {
@@ -83,16 +98,22 @@ public abstract class AbstractItemductBlockEntity extends BlockEntity implements
 				throw new NullPointerException("Input direction is null.");
 			case DOWN:
 				down = part;
+				break;
 			case UP:
 				up = part;
+				break;
 			case NORTH:
 				north = part;
+				break;
 			case EAST:
 				east = part;
+				break;
 			case SOUTH:
 				south = part;
+				break;
 			case WEST:
 				west = part;
+				break;
 		}
 	}
 	
@@ -116,7 +137,16 @@ public abstract class AbstractItemductBlockEntity extends BlockEntity implements
 	}
 	
 	@Override
+	public BlockEntityUpdateS2CPacket toUpdatePacket() {
+		return new BlockEntityUpdateS2CPacket(this.pos, Registry.BLOCK_ENTITY_TYPE.getRawId(getType()), toTag(new CompoundTag()));
+	}
+	
+	@Override
 	public void tick() {
+		if ((world.getTime() & 127) == 0) {
+			doSendUpdate = true;
+		}
+		
 		boolean canUp = tickDirection(Direction.UP, up);
 		boolean canDown = tickDirection(Direction.DOWN, down);
 		boolean canNorth = tickDirection(Direction.NORTH, north);
@@ -129,9 +159,10 @@ public abstract class AbstractItemductBlockEntity extends BlockEntity implements
 		for (ItemDuctItem item : items) {
 			if (item.isTravelingToCenter) {
 				int dist = item.distanceFromCenter - getItemSpeed();
-				if (dist < 0) {
+				if (dist <= 0) {
 					dist = -dist;
-					item.direction = item.direction.getOpposite(); //TODO: redirection based on stuff
+					redirectItem(item);
+					doSendUpdate = true;
 				}
 				item.distanceFromCenter = dist;
 			}
@@ -140,23 +171,41 @@ public abstract class AbstractItemductBlockEntity extends BlockEntity implements
 				//ensure we don't infinitely send items into the distance
 				switch (item.direction) {
 					case UP:
-						if (!canUp) item.isTravelingToCenter = true;
-						continue;
+						if (!canUp) {
+							item.isTravelingToCenter = true;
+							continue;
+						}
+						break;
 					case DOWN:
-						if (!canDown) item.isTravelingToCenter = true;
-						continue;
+						if (!canDown) {
+							item.isTravelingToCenter = true;
+							continue;
+						}
+						break;
 					case NORTH:
-						if (!canNorth) item.isTravelingToCenter = true;
-						continue;
+						if (!canNorth) {
+							item.isTravelingToCenter = true;
+							continue;
+						}
+						break;
 					case EAST:
-						if (!canEast) item.isTravelingToCenter = true;
-						continue;
+						if (!canEast) {
+							item.isTravelingToCenter = true;
+							continue;
+						}
+						break;
 					case SOUTH:
-						if (!canSouth) item.isTravelingToCenter = true;
-						continue;
+						if (!canSouth) {
+							item.isTravelingToCenter = true;
+							continue;
+						}
+						break;
 					case WEST:
-						if (!canWest) item.isTravelingToCenter = true;
-						continue;
+						if (!canWest) {
+							item.isTravelingToCenter = true;
+							continue;
+						}
+						break;
 				}
 				
 				int dist = item.distanceFromCenter + getItemSpeed();
@@ -166,10 +215,11 @@ public abstract class AbstractItemductBlockEntity extends BlockEntity implements
 						BlockEntity otherEntity = part.targetBlockEntity;
 						if (otherEntity instanceof AbstractItemductBlockEntity) {
 							AbstractItemductBlockEntity duct = (AbstractItemductBlockEntity) otherEntity;
-							ItemDuctPart receiver = ((AbstractItemductBlockEntity) otherEntity).getPart(item.direction.getOpposite());
-							if (receiver.canReceive(item)) {
+							ItemDuctPart receiver = duct.getPart(item.direction.getOpposite());
+							if (receiver != null && receiver.canReceive(item)) {
 								duct.recieve(item);
 								removed.add(item);
+								doSendUpdate = true;
 							}
 						}
 						else if (otherEntity instanceof SidedInventory) {
@@ -182,12 +232,15 @@ public abstract class AbstractItemductBlockEntity extends BlockEntity implements
 								}
 								if (inv.canInsertInvStack(slot, item.stack, insertionDir)) {
 									ItemStack other = inv.getInvStack(slot);
-									if (other.isItemEqual(item.stack) || other.isEmpty()) {
+									if (other.isEmpty()) {
+										inv.setInvStack(slot, item.stack);
+										item.stack = ItemStack.EMPTY;
+									}
+									else if (other.isItemEqual(item.stack)) {
 										int max = item.stack.getMaxCount();
 										int put = Math.min(item.stack.getCount(), max - other.getCount());
 										other.increment(put);
 										item.stack.decrement(put);
-										inv.setInvStack(slot, other);
 									}
 								}
 							}
@@ -196,19 +249,32 @@ public abstract class AbstractItemductBlockEntity extends BlockEntity implements
 							Inventory inv = (Inventory) otherEntity;
 							for (int slot = 0; slot < inv.getInvSize(); slot++) {
 								if (item.stack.isEmpty()) {
+									removed.add(item);
 									break;
 								}
 								ItemStack other = inv.getInvStack(slot);
-								if (other.isItemEqual(item.stack) || other.isEmpty()) {
+								if (other.isEmpty()) {
+									inv.setInvStack(slot, item.stack);
+									item.stack = ItemStack.EMPTY;
+									if (item.stack.isEmpty()) {
+										removed.add(item);
+										break;
+									}
+								}
+								else if (other.isItemEqual(item.stack)) {
 									int max = item.stack.getMaxCount();
 									int put = Math.min(item.stack.getCount(), max - other.getCount());
 									other.increment(put);
 									item.stack.decrement(put);
-									inv.setInvStack(slot, other);
+									if (item.stack.isEmpty()) {
+										removed.add(item);
+										break;
+									}
 								}
 							}
 						}
 					}
+					doSendUpdate = true;
 					item.isTravelingToCenter = true;
 					dist = 16 - dist;
 				}
@@ -219,7 +285,24 @@ public abstract class AbstractItemductBlockEntity extends BlockEntity implements
 		for (ItemDuctItem item : removed) {
 			items.remove(item);
 		}
+		
+		retryConnections();
+		if (doSendUpdate && world instanceof ServerWorld) {
+			doSendUpdate = false;
+			markDirty();
+			ServerWorld world = (ServerWorld) this.world;
+			for (ServerPlayerEntity plaey : world.getPlayers()) {
+				//the fuck is this shit
+				if (pos.getSquaredDistance(plaey.getBlockPos()) < 30 * 30) {
+					plaey.networkHandler.sendPacket(toUpdatePacket());
+				}
+			}
+		}
 	}
+	
+	public abstract void itemExtracted(ItemDuctItem item);
+	
+	public abstract void redirectItem(ItemDuctItem item);
 	
 	/** Recieves an item from another itemduct, where the item of the other itemduct has not been changed to accommodate this one. */
 	public void recieve(ItemDuctItem item) {
@@ -227,11 +310,23 @@ public abstract class AbstractItemductBlockEntity extends BlockEntity implements
 		ItemStack stack = item.stack.copy();
 		int dist = 16 - item.distanceFromCenter;
 		ItemDuctItem myItem = new ItemDuctItem();
-		myItem.direction = dir;
+		myItem.direction = dir.getOpposite();
 		myItem.distanceFromCenter = dist;
 		myItem.stack = stack;
 		myItem.isTravelingToCenter = true;
+		myItem.path = item.path;
+		item.path = null;
 		items.add(myItem);
+		if (!world.isClient()) {
+			markDirty();
+			ServerWorld world = (ServerWorld) this.world;
+			for (ServerPlayerEntity plaey : world.getPlayers()) {
+				//the fuck is this shit
+				if (pos.getSquaredDistance(plaey.getBlockPos()) < 30 * 30) {
+					plaey.networkHandler.sendPacket(toUpdatePacket());
+				}
+			}
+		}
 	}
 	
 	public boolean tickDirection(Direction direction, ItemDuctPart part) {
@@ -239,11 +334,19 @@ public abstract class AbstractItemductBlockEntity extends BlockEntity implements
 			return false;
 		}
 		BlockPos otherBlock = getPos().offset(direction);
-		if (part.targetBlockEntity != null && part.targetBlockEntity.isRemoved()) {
-			part.targetBlockEntity = world.getBlockEntity(otherBlock);
-		}
+		part.targetBlockEntity = world.getBlockEntity(otherBlock);
 		if (part.targetBlockEntity != null) {
-			part.extractionTick();
+			ItemStack stack = part.extractionTick();
+			if (stack != null && !world.isClient()) {
+				ItemDuctItem item = new ItemDuctItem();
+				item.stack = stack;
+				item.isTravelingToCenter = true;
+				item.distanceFromCenter = 9;
+				item.direction = direction;
+				items.add(item);
+				itemExtracted(item);
+				doSendUpdate = true;
+			}
 			return true;
 		}
 		return false;
@@ -272,19 +375,28 @@ public abstract class AbstractItemductBlockEntity extends BlockEntity implements
 	public void fromTag(CompoundTag tag) {
 		super.fromTag(tag);
 		items.clear();
-		for (Tag item : (ListTag) tag.get("items")) {
-			if (item instanceof CompoundTag) {
-				items.add(ItemDuctItem.fromTag((CompoundTag) item));
+		if (tag.get("items") instanceof ListTag) {
+			for (Tag item : (ListTag) tag.get("items")) {
+				if (item instanceof CompoundTag) {
+					items.add(ItemDuctItem.fromTag((CompoundTag) item));
+				}
 			}
 		}
 		tag = tag.getCompound("connections");
-		if (tag.contains("up")) up = AbstractItemductBlock.loadPart(tag.getCompound("up"));
-		if (tag.contains("down")) down = AbstractItemductBlock.loadPart(tag.getCompound("down"));
-		if (tag.contains("north")) north = AbstractItemductBlock.loadPart(tag.getCompound("north"));
-		if (tag.contains("east")) east = AbstractItemductBlock.loadPart(tag.getCompound("east"));
-		if (tag.contains("south")) south = AbstractItemductBlock.loadPart(tag.getCompound("south"));
-		if (tag.contains("west")) west = AbstractItemductBlock.loadPart(tag.getCompound("west"));
+		if (tag.contains("up")) up = AbstractItemductBlock.loadPart(tag.getCompound("up"), this, Direction.UP);
+		if (tag.contains("down")) down = AbstractItemductBlock.loadPart(tag.getCompound("down"), this, Direction.DOWN);
+		if (tag.contains("north")) north = AbstractItemductBlock.loadPart(tag.getCompound("north"), this, Direction.NORTH);
+		if (tag.contains("east")) east = AbstractItemductBlock.loadPart(tag.getCompound("east"), this, Direction.EAST);
+		if (tag.contains("south")) south = AbstractItemductBlock.loadPart(tag.getCompound("south"), this, Direction.SOUTH);
+		if (tag.contains("west")) west = AbstractItemductBlock.loadPart(tag.getCompound("west"), this, Direction.WEST);
 		retryConnections();
 	}
 	
+	public boolean isValidDestination(BlockEntity targetBlockEntity, ItemStack stack, Direction fromDirection) {
+		return true;
+	}
+	
+	public boolean isDesiredDestination(BlockEntity targetBlockEntity, ItemStack stack, Direction fromDirection) {
+		return true;
+	}
 }

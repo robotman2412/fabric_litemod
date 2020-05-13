@@ -16,6 +16,7 @@ public class ItemDuctPartType<Type extends ItemDuctPart> {
 	public ItemDuctPartType(Supplier<Type> factory, Identifier id) {
 		this.factory = factory;
 		this.id = id;
+		AbstractItemductBlock.PARTS.add(this);
 	}
 	
 	public Type initialise() {
@@ -30,7 +31,7 @@ public class ItemDuctPartType<Type extends ItemDuctPart> {
 		Type part = initialise();
 		part.targetPos = pos.offset(direction);
 		part.entity = entity;
-		part.targetBlockEntity = entity.getWorld().getBlockEntity(part.targetPos);
+		part.direction = direction;
 		return part;
 	}
 	

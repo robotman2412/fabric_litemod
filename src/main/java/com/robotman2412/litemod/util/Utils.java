@@ -1,8 +1,11 @@
 package com.robotman2412.litemod.util;
 
+import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.chunk.Chunk;
 
@@ -10,6 +13,7 @@ import java.util.Random;
 
 public class Utils {
 	
+	public static int maxBannerThingies = 64;
 	public static int healthConfusion = 1;
 	
 	public static boolean isHeartUv(int u, int v) {
@@ -38,7 +42,7 @@ public class Utils {
 		return rnd.nextInt(10) == 0;
 	}
 	
-	public static boolean isSlimeChunk(IWorld world, Chunk chunk) {
+	public static boolean isSlimeChunk(IWorld world, Chunk chunk) { //TODO: fix, client doesn't get the seed
 		return isSlimeChunk(world.getSeed(), chunk.getPos().x, chunk.getPos().z);
 	}
 	
@@ -77,6 +81,56 @@ public class Utils {
 	
 	public static int maxPortalHeight() {
 		return 21;
+	}
+	
+	public static boolean willItemFit(ItemStack stack, Inventory inventory, Direction directionOnBlock) {
+		if (inventory instanceof SidedInventory) {
+			int[] slots = ((SidedInventory) inventory).getInvAvailableSlots(directionOnBlock);
+			for (int slot : slots) {
+				ItemStack existing = inventory.getInvStack(slot);
+				if (existing.isEmpty() || (existing.isItemEqual(stack) && existing.getCount() < existing.getMaxCount())) {
+					return true;
+				}
+			}
+		}
+		else
+		{
+			for (int slot = 0; slot < inventory.getInvSize(); slot++) {
+				ItemStack existing = inventory.getInvStack(slot);
+				if (existing.isEmpty() || (existing.isItemEqual(stack) && existing.getCount() < existing.getMaxCount())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public static boolean willItemFitInExisting(ItemStack stack, Inventory inventory, Direction directionOnBlock) {
+		if (inventory instanceof SidedInventory) {
+			int[] slots = ((SidedInventory) inventory).getInvAvailableSlots(directionOnBlock);
+			for (int slot : slots) {
+				ItemStack existing = inventory.getInvStack(slot);
+				if (existing.isEmpty()) {
+					continue;
+				}
+				if (existing.isItemEqual(stack) && existing.getCount() < existing.getMaxCount()) {
+					return true;
+				}
+			}
+		}
+		else
+		{
+			for (int slot = 0; slot < inventory.getInvSize(); slot++) {
+				ItemStack existing = inventory.getInvStack(slot);
+				if (existing.isEmpty()) {
+					continue;
+				}
+				if (existing.isItemEqual(stack) && existing.getCount() < existing.getMaxCount()) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 }

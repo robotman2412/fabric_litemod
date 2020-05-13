@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "ISI",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_nugget"
+    },
+    "S": {
+      "item": "robot_litemod:spring"
+    }
+  },
+  "result": {
+    "item": "robot_litemod:drum_mag_empty"
+  }
+}

@@ -4,7 +4,6 @@ import com.robotman2412.litemod.item.ItemWrapper;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ProjectileUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
@@ -23,6 +22,10 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.RayTraceContext;
 import net.minecraft.world.World;
 
+import java.util.Iterator;
+import java.util.Optional;
+import java.util.function.Predicate;
+
 public abstract class AimableWeapon extends ItemWrapper {
 	
 	public AimableWeapon(Settings settings, String itemName) {
@@ -31,12 +34,16 @@ public abstract class AimableWeapon extends ItemWrapper {
 	
 	@Override
 	public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-		
+		if (shouldFireOnRelease(stack)) {
+			tryFire(world, user, user.getActiveHand(), stack);
+		}
 	}
 	
 	@Override
 	public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-		tryFire(world, user, user.getActiveHand(), stack);
+		if (!shouldFireOnRelease(stack)) {
+			tryFire(world, user, user.getActiveHand(), stack);
+		}
 	}
 	
 	@Override
@@ -54,7 +61,6 @@ public abstract class AimableWeapon extends ItemWrapper {
 	
 	@Override
 	public boolean useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
-		tryFire(user.getEntityWorld(), user, hand, stack);
 		return false;
 	}
 	
@@ -73,7 +79,7 @@ public abstract class AimableWeapon extends ItemWrapper {
 		Box box = new Box(-maxDist, -maxDist, -maxDist, maxDist, maxDist, maxDist).offset(firePos);
 		Vec3d vec3d2 = shooter.getRotationVec(1.0F);
 		Vec3d traceDir = firePos.add(vec3d2.x * maxDist, vec3d2.y * maxDist, vec3d2.z * maxDist);
-		EntityHitResult entityHitResult = ProjectileUtil.rayTrace(shooter, firePos, traceDir, box, (entityx) -> {
+		EntityHitResult entityHitResult = rayTraceEntity(shooter, firePos, traceDir, box, (entityx) -> {
 			return !entityx.isSpectator() && entityx.collides();
 		}, maxDist * maxDist);
 		//raytrace fluids
@@ -173,6 +179,50 @@ public abstract class AimableWeapon extends ItemWrapper {
 		return player.world.rayTrace(new RayTraceContext(cameraPos, direction, RayTraceContext.ShapeType.OUTLINE, includeFluids ? RayTraceContext.FluidHandling.ANY : RayTraceContext.FluidHandling.NONE, player));
 	}
 	
+	public static EntityHitResult rayTraceEntity(Entity entity, Vec3d vec3d, Vec3d vec3d2, Box box, Predicate<Entity> predicate, double d) {
+		World world = entity.world;
+		double e = d;
+		Entity entity2 = null;
+		Vec3d vec3d3 = null;
+		Iterator var12 = world.getEntities(entity, box, predicate).iterator();
+		
+		while(true) {
+			while(var12.hasNext()) {
+				Entity entity3 = (Entity)var12.next();
+				Box box2 = entity3.getBoundingBox().expand((double)entity3.getTargetingMargin());
+				Optional<Vec3d> optional = box2.rayTrace(vec3d, vec3d2);
+				if (box2.contains(vec3d)) {
+					if (e >= 0.0D) {
+						entity2 = entity3;
+						vec3d3 = (Vec3d)optional.orElse(vec3d);
+						e = 0.0D;
+					}
+				} else if (optional.isPresent()) {
+					Vec3d vec3d4 = (Vec3d)optional.get();
+					double f = vec3d.squaredDistanceTo(vec3d4);
+					if (f < e || e == 0.0D) {
+						if (entity3.getRootVehicle() == entity.getRootVehicle()) {
+							if (e == 0.0D) {
+								entity2 = entity3;
+								vec3d3 = vec3d4;
+							}
+						} else {
+							entity2 = entity3;
+							vec3d3 = vec3d4;
+							e = f;
+						}
+					}
+				}
+			}
+			
+			if (entity2 == null) {
+				return null;
+			}
+			
+			return new EntityHitResult(entity2, vec3d3);
+		}
+	}
+	
 	protected abstract double getMaximumDistance(ItemStack stack);
 	
 	public abstract boolean preFire(World world, LivingEntity shooter, FireingContext context);
@@ -182,6 +232,10 @@ public abstract class AimableWeapon extends ItemWrapper {
 	public abstract void onEntityHit(World world, LivingEntity shooter, FireingContext context, Entity hitEntity);
 	
 	public abstract void onNoHit(World world, LivingEntity shooter, FireingContext context);
+	
+	public boolean shouldFireOnRelease(ItemStack stack) {
+		return false;
+	}
 	
 	public static class FireingContext {
 		

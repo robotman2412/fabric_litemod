@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WBW",
+    " WS"
+  ],
+  "key": {
+    "B": {
+      "item": "robot_litemod:barrel"
+    },
+    "W": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "robot_litemod:spring"
+    }
+  },
+  "result": {
+    "item": "robot_litemod:bolt"
+  }
+}

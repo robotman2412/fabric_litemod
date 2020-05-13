@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "B#S",
+    " NW"
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:planks"
+    },
+    "N": {
+      "item": "minecraft:iron_nugget"
+    },
+    "B": {
+      "item": "robot_litemod:barrel"
+    },
+    "#": {
+      "item": "robot_litemod:bolt"
+    },
+    "S": {
+      "item": "robot_litemod:stock"
+    }
+  },
+  "result": {
+    "item": "robot_litemod:ak47_type2"
+  }
+}

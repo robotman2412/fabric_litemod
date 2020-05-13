@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "B#S",
+    "ANW"
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:planks"
+    },
+    "N": {
+      "item": "minecraft:iron_nugget"
+    },
+    "B": {
+      "item": "robot_litemod:barrel"
+    },
+    "#": {
+      "item": "robot_litemod:bolt"
+    },
+    "S": {
+      "item": "robot_litemod:stock"
+    },
+    "A": {
+      "item": "robot_litemod:spring"
+    }
+  },
+  "result": {
+    "item": "robot_litemod:ppsh41_smg"
+  }
+}

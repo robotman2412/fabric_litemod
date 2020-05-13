@@ -31,11 +31,22 @@
   
   "item.robot_litemod.ak47_type2": "AK-47 type 2",
   "item.robot_litemod.makarov_pistol": "Makarov",
-  
+  "item.robot_litemod.dragunov_sniper_rifle": "Dragunov",
+  "item.robot_litemod.ppsh41_smg": "PPSh-41",
+
+  "item.robot_litemod.bullet_07_39_standard": "07 x 39 standard bullet",
+  "item.robot_litemod.bullet_09_18_standard": "09 x 18 standard bullet",
   "item.robot_litemod.banana_mag_07_39_standard": "Banana magazine (07 x 39 standard)",
   "item.robot_litemod.banana_mag_empty": "Banana magazine (empty)",
-  "item.robot_litemod.box_mag_09_18_standard": "Box magazine (09 x 18 standard)",
-  "item.robot_litemod.box_mag_empty": "Box magazine (empty)",
+  "item.robot_litemod.drum_mag_07_39_standard": "Drum magazine (07 x 39 standard)",
+  "item.robot_litemod.drum_mag_empty": "Drum magazine (empty)",
+  "item.robot_litemod.box_mag_09_18_standard": "Stick magazine (09 x 18 standard)",
+  "item.robot_litemod.box_mag_empty": "Stick magazine (empty)",
+  "item.robot_litemod.bolt": "Bolt mechanism",
+  "item.robot_litemod.stock": "Gun stock",
+  "item.robot_litemod.barrel": "Barrel",
+  "item.robot_litemod.slide": "Pistol slide",
+  "item.robot_litemod.spring": "Spring",
 
   "itemGroup.robot_litemod.kitchen_supplies": "Kitchen supplies",
   "itemGroup.robot_litemod.weaponry": "Weaponry",
@@ -69,6 +80,10 @@
   "block.robot_litemod.movable_redstone_inferrer": "Movable redstone inferrer",
   "block.robot_litemod.movable_redstone_torch": "Movable redstone torch",
   "block.robot_litemod.the_stone_of_graves": "Gravestone",
+
+  "block.robot_litemod.golden_itemduct": "Golden Itemduct",
+  "block.robot_litemod.iron_itemduct": "Iron Itemduct",
+  "block.robot_litemod.diamond_itemduct": "Diamond Itemduct",
   
   "robot_litemod.gui.frequency_tuner.private": "Private",
   "robot_litemod.gui.frequency_tuner.public": "Public",
@@ -100,15 +115,22 @@
   "death.robot_litemod.drug.fireworks": " was too stoned at the new years party",
   "death.robot_litemod.drug.bitchfight_lost": " lost the stoned bitchfight with ",
 
+  "robot_litemod.mag.bullets": "Number of rounds: ",
+  "robot_litemod.mag.bullet_diameter": "Bullet diameter: ",
+  "robot_litemod.mag.bullet_length": "Bullet length: ",
+  
   "robot_litemod.weapon.diameter": "Bullet diameter: ",
   "robot_litemod.weapon.max_length": "Max bullet length: ",
   "robot_litemod.weapon.mode": "Weapon mode: ",
   "robot_litemod.weapon.rate_of_fire": "Rate of fire: ",
   "robot_litemod.weapon.rate_of_fire.suffix": " shots/s",
   "robot_litemod.weapon.remaining_ammo": "Remaining ammo: ",
+  "robot_litemod.weapon.damage": "Attack damage: ",
+  "robot_litemod.weapon.damage.dragunov": "Attack damage: 5, 20 when fully charged",
   
   "robot_litemod.weapon_mode.single_fire": "Single fire",
   "robot_litemod.weapon_mode.automatic": "Automatic",
+  "robot_litemod.weapon_mode.tri_shot": "Triple shot",
   
   "robot_litemod.weapon.out_of_ammo": "Out of ammo!",
   "robot_litemod.weapon.magazine_empty": "Magazine emptied."

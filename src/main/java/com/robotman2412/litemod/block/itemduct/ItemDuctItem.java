@@ -1,5 +1,6 @@
 package com.robotman2412.litemod.block.itemduct;
 
+import com.robotman2412.litemod.block.itemduct.util.ItemDuctItemPath;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.Direction;
@@ -11,12 +12,17 @@ public class ItemDuctItem {
 	/** 8 is at the edge. */
 	public int distanceFromCenter;
 	public boolean isTravelingToCenter;
+	public ItemDuctItemPath path;
 	
 	public CompoundTag toTag(CompoundTag tag) {
 		tag.put("stack", stack.toTag(new CompoundTag()));
 		tag.putInt("distanceFromCenter", distanceFromCenter);
 		tag.putBoolean("isTravelingToCenter", isTravelingToCenter);
 		tag.putString("direction", direction.toString());
+		tag.putBoolean("has_path", path != null);
+		if (path != null) {
+			tag.put("path", path.toTag());
+		}
 		return tag;
 	}
 	
@@ -26,6 +32,9 @@ public class ItemDuctItem {
 		item.distanceFromCenter = tag.getInt("distanceFromCenter");
 		item.isTravelingToCenter = tag.getBoolean("isTravelingToCenter");
 		item.direction = Direction.byName(tag.getString("direction"));
+		if (tag.getBoolean("has_path")) {
+			item.path = ItemDuctItemPath.fromTag(tag.getCompound("path"));
+		}
 		return item;
 	}
 	

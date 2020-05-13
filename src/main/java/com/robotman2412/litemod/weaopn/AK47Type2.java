@@ -2,6 +2,7 @@ package com.robotman2412.litemod.weaopn;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 
 public class AK47Type2 extends AbstractionOfTheGun {
 	
@@ -56,13 +57,13 @@ public class AK47Type2 extends AbstractionOfTheGun {
 	}
 	
 	@Override
-	public int getMinimumDamage(ItemStack stack) {
-		return 3;
+	public int getMinimumDamage(ItemStack stack, World world) {
+		return 4;
 	}
 	
 	@Override
-	public int getMaximumDamage(ItemStack stack) {
-		return 5;
+	public int getMaximumDamage(ItemStack stack, World world) {
+		return 7;
 	}
 	
 	@Override

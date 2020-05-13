@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "B#S",
+    "INI"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "N": {
+      "item": "minecraft:iron_nugget"
+    },
+    "B": {
+      "item": "robot_litemod:barrel"
+    },
+    "#": {
+      "item": "robot_litemod:bolt"
+    },
+    "S": {
+      "item": "robot_litemod:stock"
+    }
+  },
+  "result": {
+    "item": "robot_litemod:dragunov_sniper_rifle"
+  }
+}

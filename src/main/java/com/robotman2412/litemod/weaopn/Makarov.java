@@ -2,6 +2,7 @@ package com.robotman2412.litemod.weaopn;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 
 public class Makarov extends AbstractionOfTheGun {
 	
@@ -35,12 +36,12 @@ public class Makarov extends AbstractionOfTheGun {
 	}
 	
 	@Override
-	public int getMinimumDamage(ItemStack stack) {
+	public int getMinimumDamage(ItemStack stack, World world) {
 		return 5;
 	}
 	
 	@Override
-	public int getMaximumDamage(ItemStack stack) {
+	public int getMaximumDamage(ItemStack stack, World world) {
 		return 7;
 	}
 	

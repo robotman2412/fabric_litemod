@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WWW",
+    " WW",
+    "  I"
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:planks"
+    },
+    "I": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "result": {
+    "item": "robot_litemod:stock"
+  }
+}

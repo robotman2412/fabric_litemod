@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "MDM"
+  ],
+  "key": {
+    "M": {
+      "item": "robot_litemod:banana_mag_07_39_standard"
+    },
+    "D": {
+      "item": "robot_litemod:drum_mag_empty"
+    }
+  },
+  "result": {
+    "item": "robot_litemod:drum_mag_07_39_standard"
+  }
+}

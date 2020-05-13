@@ -24,7 +24,7 @@ gamma:1.0
 renderDistance:12
 guiScale:3
 particles:0
-maxFps:120
+maxFps:60
 difficulty:2
 fancyGraphics:true
 ao:2

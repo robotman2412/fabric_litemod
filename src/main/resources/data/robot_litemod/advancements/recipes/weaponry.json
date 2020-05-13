@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "robot_litemod:ak47_type2",
+      "robot_litemod:dragunov_sniper_rifle",
+      "robot_litemod:makarov_pistol",
+      "robot_litemod:ppsh41_smg",
+      "robot_litemod:stock",
+      "robot_litemod:slide",
+      "robot_litemod:barrel",
+      "robot_litemod:bolt",
+      "robot_litemod:spring",
+      "robot_litemod:box_magazine",
+      "robot_litemod:box_mag_09_18_standard",
+      "robot_litemod:banana_magazine",
+      "robot_litemod:banana_mag_07_39_standard",
+      "robot_litemod:drum_mag_empty",
+      "robot_litemod:drum_mag_07_39_standard",
+      "robot_litemod:bullet_09_18_standard",
+      "robot_litemod:bullet_07_39_standard"
+    ]
+  },
+  "criteria": {
+    "has_gunpowder": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:gunpowder"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_gunpowder"
+    ]
+  ]
+}

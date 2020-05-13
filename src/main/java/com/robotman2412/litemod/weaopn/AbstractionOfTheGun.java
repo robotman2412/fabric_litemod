@@ -18,21 +18,22 @@ import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.WaterFluid;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.MessageType;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.PacketByteBuf;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -47,13 +48,13 @@ public abstract class AbstractionOfTheGun extends AimableWeapon {
 		super(settings.maxCount(1).group(FabricLitemod.WEAPONS), itemName);
 	}
 	
-	public int getMinimumDamage(ItemStack stack) {
-		return getMaximumDamage(stack);
+	public int getMinimumDamage(ItemStack stack, World world) {
+		return getMaximumDamage(stack, world);
 	}
 	
-	public float getRandomDamage(ItemStack stack) {
-		int min = getMinimumDamage(stack);
-		int max = getMaximumDamage(stack);
+	public float getRandomDamage(ItemStack stack, World world) {
+		int min = getMinimumDamage(stack, world);
+		int max = getMaximumDamage(stack, world);
 		Random random = new Random();
 		return min + (max - min) * random.nextFloat();
 	}
@@ -89,6 +90,7 @@ public abstract class AbstractionOfTheGun extends AimableWeapon {
 		tooltip.add(new TranslatableText("robot_litemod.weapon.mode").append(new TranslatableText(activeMode.getTranslationKey())));
 		tooltip.add(new TranslatableText("robot_litemod.weapon.rate_of_fire").append(sFireRate).append(new TranslatableText("robot_litemod.weapon.rate_of_fire.suffix")));
 		tooltip.add(new TranslatableText("robot_litemod.weapon.remaining_ammo").append("" + getRemainingAmmo(stack)));
+		tooltip.add(new TranslatableText("robot_litemod.weapon.damage").append(getMinimumDamage(stack, world) + " - " + getMaximumDamage(stack, world)));
 	}
 	
 	//region misc
@@ -138,7 +140,7 @@ public abstract class AbstractionOfTheGun extends AimableWeapon {
 		}
 	}
 	
-	public abstract int getMaximumDamage(ItemStack stack);
+	public abstract int getMaximumDamage(ItemStack stack, World world);
 	
 	public abstract float getMinRecoil(ItemStack stack);
 	
@@ -159,10 +161,49 @@ public abstract class AbstractionOfTheGun extends AimableWeapon {
 	
 	//region fire
 	@Override
+	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+		ItemStack stack = user.getStackInHand(hand);
+		LastFireBullshite shite = map.get(stack);
+		if (shite == null) {
+			shite = new LastFireBullshite();
+			map.put(stack, shite);
+		}
+		shite.startedFiring = world.getTime();
+		return super.use(world, user, hand);
+	}
+	
+	@Override
+	public ActionResult useOnBlock(ItemUsageContext context) {
+		ItemStack stack = context.getStack();
+		LastFireBullshite shite = map.get(stack);
+		if (shite == null) {
+			shite = new LastFireBullshite();
+			map.put(stack, shite);
+		}
+		shite.startedFiring = context.getWorld().getTime();
+		return super.useOnBlock(context);
+	}
+	
+	@Override
+	public boolean useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
+		LastFireBullshite shite = map.get(stack);
+		if (shite == null) {
+			shite = new LastFireBullshite();
+			map.put(stack, shite);
+		}
+		shite.startedFiring = entity.world.getTime();
+		return super.useOnEntity(stack, user, entity, hand);
+	}
+	
+	@Override
 	public boolean preFire(World world, LivingEntity shooter, FireingContext context) {
 		ItemStack stack = shooter.getActiveItem();
 		LastFireBullshite shite = map.get(stack);
 		WeaponMode mode = getMode(stack);
+		PlayerEntity[] players = new PlayerEntity[0];
+		if (world instanceof ServerWorld) {
+			players = world.getPlayers().toArray(new PlayerEntity[0]);
+		}
 		if (shite == null) {
 			shite = new LastFireBullshite(world.getTime() - getFireDelayTicks(mode), 0);
 			map.put(stack, shite);
@@ -181,6 +222,7 @@ public abstract class AbstractionOfTheGun extends AimableWeapon {
 				int ammo = Math.max(0, getRemainingAmmo(stack) - shite.consecutiveShots);
 				stack.getOrCreateTag().putInt("ammo", ammo);
 				shite.consecutiveShots = 0;
+				shooter.playSound(new SoundEvent(new Identifier("block.dispenser.fail")), 1, 1.3f);
 			}
 			shite.didSendAmmoWarning = true;
 			return false;
@@ -195,23 +237,24 @@ public abstract class AbstractionOfTheGun extends AimableWeapon {
 				int ammo = Math.max(0, getRemainingAmmo(stack) - shite.consecutiveShots);
 				stack.getOrCreateTag().putInt("ammo", ammo);
 				shite.consecutiveShots = 0;
+				shooter.playSound(new SoundEvent(new Identifier("block.dispenser.fail")), 1, 1.3f);
 			}
 			shite.didSendAmmoWarning = true;
 		}
 		if (context.firstFluidHit != null) {
 			if (context.firstFluidHit.getFluid() instanceof WaterFluid) {
 				Vec3d hit = context.firstFluitHitPos;
-				world.playSound(hit.x, hit.y, hit.z, new SoundEvent(new Identifier("minecraft", "entity.generic.splash")), SoundCategory.PLAYERS, 0.75f, 1.5f, true);
+				world.playSound(null, hit.x, hit.y, hit.z, new SoundEvent(new Identifier("minecraft", "entity.generic.splash")), SoundCategory.PLAYERS, 0.75f, 1.5f);
 			}
 		}
-		if (world.isClient) {
+		if (world.isClient && ClientEntry.isClientPlayer(shooter)) {
 			ClientEntry.recoil(
 					-world.random.nextFloat() * Math.abs(getMaxRecoil(stack) - getMinRecoil(stack)) - getMinRecoil(stack),
 					(world.random.nextFloat() - 0.5f) * getMaxRecoil(stack)
 			);
-			SoundEffectWrapper wrapper = getFireSound(stack);
-			world.playSound(context.firedFrom.x, context.firedFrom.y - 0.5, context.firedFrom.z, wrapper.sound, SoundCategory.PLAYERS, wrapper.volume, wrapper.pitch, true);
 		}
+		SoundEffectWrapper wrapper = getFireSound(stack);
+		world.playSound(null, context.firedFrom.x, context.firedFrom.y - 0.5, context.firedFrom.z, wrapper.sound, SoundCategory.PLAYERS, wrapper.volume, wrapper.pitch);
 		return true;
 	}
 	
@@ -232,7 +275,7 @@ public abstract class AbstractionOfTheGun extends AimableWeapon {
 			double y = context.hit.y;
 			double z = context.hit.z;
 			double mult = 0.065125;
-			int num = world.random.nextInt(3) + 2;
+			int num = Math.round(getRandomDamage(context.stack, world));
 			for (int i = 0; i < num; i++) {
 				world.addParticle(
 						effect,
@@ -267,7 +310,7 @@ public abstract class AbstractionOfTheGun extends AimableWeapon {
 			return;
 		}
 		MunitionType type = getMunitionType(context.stack);
-		float damageDealt = getRandomDamage(context.stack);
+		float damageDealt = getRandomDamage(context.stack, world);
 		boolean headshot = false;
 		if (hitEntity instanceof LivingEntity) {
 			//try headshot
@@ -297,9 +340,7 @@ public abstract class AbstractionOfTheGun extends AimableWeapon {
 			hitEntity.addVelocity(knockback.x, knockback.y * -0.25, knockback.z);
 		}
 		if (shooter instanceof ServerPlayerEntity) {
-			((ServerPlayerEntity) shooter).playSound(new SoundEvent(
-					new Identifier("minecraft", "entity.experience_orb.pickup")
-			), SoundCategory.MASTER, headshot ? 0.75f : 0.5f, headshot ? 1f : 0.0005f);
+			((ServerPlayerEntity) shooter).playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, headshot ? 0.75f : 0.5f, headshot ? 1f : 0.0005f);
 		}
 	}
 	//endregion fire
@@ -379,6 +420,7 @@ public abstract class AbstractionOfTheGun extends AimableWeapon {
 		if (getRemainingAmmo(gunneStack) > 0) {
 			return;
 		}
+		boolean ammolised = false;
 		CompoundTag tag = gunneStack.getOrCreateTag();
 		for (int i = 0; i < player.inventory.getInvSize(); i++) {
 			ItemStack stack = player.inventory.getInvStack(i);
@@ -397,11 +439,18 @@ public abstract class AbstractionOfTheGun extends AimableWeapon {
 						ItemScatterer.spawn(player.world, player.getX(), player.getY(), player.getZ(), gunneStack);
 					}
 				}
+				ammolised = true;
 				break;
 			}
 		}
-		SoundEffectWrapper sound = gunne.getReloadSound(gunneStack);
-		player.world.playSound(null, player.getX(), player.getY(), player.getZ(), sound.sound, SoundCategory.PLAYERS, sound.volume, sound.pitch);
+		if (!ammolised) {
+			((ServerPlayerEntity) player).sendChatMessage(new TranslatableText("robot_litemod.weapon.out_of_ammo"), MessageType.GAME_INFO);
+		}
+		else
+		{
+			SoundEffectWrapper sound = gunne.getReloadSound(gunneStack);
+			player.world.playSound(null, player.getX(), player.getY(), player.getZ(), sound.sound, SoundCategory.PLAYERS, sound.volume, sound.pitch);
+		}
 	}
 	
 	public static class LastFireBullshite {
@@ -409,6 +458,7 @@ public abstract class AbstractionOfTheGun extends AimableWeapon {
 		public long lastFireTick;
 		public int consecutiveShots;
 		public boolean didSendAmmoWarning;
+		public long startedFiring;
 		
 		public LastFireBullshite() {
 			
@@ -429,7 +479,7 @@ public abstract class AbstractionOfTheGun extends AimableWeapon {
 		public final float pitch;
 		
 		public SoundEffectWrapper(Identifier soundID, float volume, float pitch) {
-			this.sound = new SoundEvent(soundID);
+			this.sound = Registry.SOUND_EVENT.get(soundID);
 			this.soundID = soundID;
 			this.volume = volume;
 			this.pitch = pitch;
